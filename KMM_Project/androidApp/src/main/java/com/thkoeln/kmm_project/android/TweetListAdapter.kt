@@ -3,6 +3,7 @@ package com.thkoeln.kmm_project.android
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -20,11 +21,28 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         val tweetDate = rowView.findViewById<TextView>(R.id.tweet_date)
         val tweetContent = rowView.findViewById<TextView>(R.id.tweet_content)
 
+        val likeButton = rowView.findViewById<Button>(R.id.tweet_like_button)
+        changeButtonColor(likeButton, tweet[position].liked)
 
         userName.text = tweet[position].userName
         tweetDate.text = "• " + tweet[position].tweetDate
         tweetContent.text = tweet[position].tweetContent
 
+        likeButton.setOnClickListener {
+            tweet[position].changeLikedStatus()
+            changeButtonColor(likeButton, tweet[position].liked)
+
+            notifyDataSetChanged() //And refresh the adapter
+        }
+
         return rowView
+    }
+
+    fun changeButtonColor(likeButton: Button, liked: Boolean) {
+        if(liked) {
+            likeButton.setTextColor(Color.parseColor("#1B5BFF"))
+        } else {
+            likeButton.setTextColor(Color.parseColor("#AAAAAA"))
+        }
     }
 }

@@ -20,6 +20,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/profilePic"
+        android:text="Nico T."
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -28,10 +29,11 @@
         android:id="@+id/tweet_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
         android:layout_toEndOf="@+id/user_name"
+        android:text="• 10 Nov 2021"
         android:textColor="@android:color/darker_gray"
         android:textSize="15sp" />
 
@@ -42,6 +44,7 @@
         android:layout_below="@+id/user_name"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="10dp"
+        android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren."
         android:textColor="@android:color/black"
         android:textSize="15sp" />
 
@@ -54,7 +57,7 @@
         android:background="@android:color/transparent"
         android:text="Like"
         android:textAllCaps="false"
-        android:textColor="#1B5BFF"
+        android:textColor="@android:color/darker_gray"
         android:textStyle="bold" />
 
     <Button
