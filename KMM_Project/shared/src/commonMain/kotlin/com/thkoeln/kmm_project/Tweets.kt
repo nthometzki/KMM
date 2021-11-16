@@ -1,10 +1,8 @@
 package com.thkoeln.kmm_project
 
-class Tweets {
-
-    // TODO: Fetch tweets from backend ?
-    private val tweets = arrayOf(
-        Tweet("1234","Nico T.", "10 Nov 2021", "Lorem ipsum 123", false, true),
+class Tweets(
+    private var tweets: Array<Tweet> = arrayOf(
+        Tweet("1234", "Nico T.", "10 Nov 2021", "Lorem ipsum 123", false, true),
         Tweet(
             "5678",
             "Nico T.",
@@ -14,7 +12,15 @@ class Tweets {
             true
         ),
     )
-    fun getAllTweets() : Array<Tweet>{
+) {
+
+    // TODO: Fetch tweets from backend ?
+
+    fun getAllTweets(): Array<Tweet> {
         return tweets
+    }
+
+    fun addTweet(tweet: Tweet) {
+        tweets += tweet
     }
 }

@@ -22,11 +22,23 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("com.arkivanov.mvikotlin:mvikotlin:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-main:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-logging:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-timetravel:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:2.0.4")
+                implementation("com.arkivanov.mvikotlin:rx:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation("com.arkivanov.mvikotlin:mvikotlin:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
             }
         }
         val androidMain by getting

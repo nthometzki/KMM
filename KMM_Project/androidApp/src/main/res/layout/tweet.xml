@@ -55,10 +55,12 @@
         android:layout_below="@+id/tweet_content"
         android:layout_marginStart="30dp"
         android:background="@android:color/transparent"
-        android:text="Like"
+        android:text="@string/like"
         android:textAllCaps="false"
         android:textColor="@android:color/darker_gray"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <Button
         android:id="@+id/tweet_comment_button"
@@ -69,9 +71,12 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tweet_like_button"
         android:background="@android:color/transparent"
-        android:text="Comment"
+        android:text="@string/comment"
         android:textAllCaps="false"
         android:textColor="@android:color/darker_gray"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        />
 
 </RelativeLayout>
