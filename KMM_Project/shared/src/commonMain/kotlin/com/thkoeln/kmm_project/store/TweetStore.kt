@@ -8,6 +8,11 @@ import com.arkivanov.mvikotlin.core.store.create
 import com.arkivanov.mvikotlin.core.store.*
 import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
+import com.badoo.reaktive.scheduler.computationScheduler
+import com.badoo.reaktive.scheduler.mainScheduler
+import com.badoo.reaktive.single.map
+import com.badoo.reaktive.single.singleFromFunction
+import com.badoo.reaktive.single.subscribeOn
 import com.thkoeln.kmm_project.Tweet
 //import android.content.Intent
 import com.thkoeln.kmm_project.store.TweetStore.Intent
@@ -26,27 +31,35 @@ internal interface TweetStore : Store<Intent, State, Nothing> {
     )
 }
 
-internal abstract class TweetStoreFactory(private val storeFactory: StoreFactory) {
+internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
 
-    protected sealed class Result {
-        class TweetAdd(val tweets: Array<Tweet>) : Result()
+    sealed class Result {
+        class TweetAdd(val tweet: Tweet) : Result()
     }
 
-    protected abstract fun createExecutor(): Executor<Intent, Nothing, State, Result, Nothing>
+    private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
+        override fun executeIntent(intent: Intent, getState: () -> State) =
+            when (intent) {
+                is Intent.AddTweet -> dispatch(Result.TweetAdd( intent.tweet))
+            }
+
+
+    }
+
 
     fun create(): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "CounterStore",
             initialState = State(),
             reducer = ReducerImpl,
-            executorFactory = ::createExecutor,
+            executorFactory = ::ExecutorImpl,
         ) {
         }
 
     private object ReducerImpl : Reducer<State, Result> {
         override fun State.reduce(result: Result): State =
             when (result) {
-                is Result.TweetAdd -> copy(value = value + result.tweets)
+                is Result.TweetAdd -> copy(value = value + result.tweet)
             }
     }
 }

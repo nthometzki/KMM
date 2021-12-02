@@ -11,6 +11,6 @@ interface TweetAddView : MviView<TweetAddView.Model, TweetAddView.Event> {
     )
 
     sealed class Event {
-        data class TweetAdd(val tweets: Array<Tweet>) : Event()
+        data class TweetAdd(val tweet: Tweet) : Event()
     }
 }
