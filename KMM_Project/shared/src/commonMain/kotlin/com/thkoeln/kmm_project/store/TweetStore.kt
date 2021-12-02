@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.store.create
 import com.arkivanov.mvikotlin.core.store.*
 import com.arkivanov.mvikotlin.core.store.Executor
+import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
 import com.badoo.reaktive.scheduler.computationScheduler
 import com.badoo.reaktive.scheduler.mainScheduler
@@ -22,13 +23,13 @@ import com.thkoeln.kmm_project.store.TweetStore.State
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
 
-    sealed class Intent {
+    sealed class Intent: JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
     }
 
     data class State(
-        val value: Array<Tweet> = arrayOf()
-    )
+        val value: Array<Tweet> = arrayOf(Tweet("1234", "Nico T.", "10 Nov 2021", "Test", false, true))
+    ): JvmSerializable
 }
 
 internal class TweetStoreFactory(private val storeFactory: StoreFactory) {

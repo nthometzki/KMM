@@ -7,7 +7,6 @@
     tools:context=".ui.home.HomeFragment"
     android:background="#fff">
 
-
     <ListView
         android:id="@+id/tweet_list_view"
         android:layout_width="match_parent"

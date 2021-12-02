@@ -6,7 +6,7 @@ import com.thkoeln.kmm_project.view.TweetAddView
 internal val stateToModel: TweetStore.State.() -> TweetAddView.Model =
     {
         TweetAddView.Model(
-            value = value
+            tweets = value
         )
     }
 

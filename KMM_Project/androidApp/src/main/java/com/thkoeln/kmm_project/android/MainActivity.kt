@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.thkoeln.kmm_project.Tweets
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
 
 class MainActivity : AppCompatActivity() {
