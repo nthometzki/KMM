@@ -13,6 +13,11 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
+import com.thkoeln.kmm_project.Networking
+import kotlinx.coroutines.runBlocking
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private lateinit var bundle: Bundle
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    val client = HttpClient()
+
+    override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -33,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
 
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -43,6 +49,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //Networking test
+        //val client = Networking()
+        //val result = client.makeRequest("https://api.fabmeta.net/deck/1345")
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
