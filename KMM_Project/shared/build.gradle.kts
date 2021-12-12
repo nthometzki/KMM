@@ -33,6 +33,7 @@ kotlin {
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
                 implementation("com.badoo.reaktive:reaktive:1.2.1")
                 implementation("com.arkivanov.essenty:lifecycle:0.2.2")
+                implementation("io.ktor:ktor-client-core:1.6.7")
             }
         }
         val commonTest by getting {
