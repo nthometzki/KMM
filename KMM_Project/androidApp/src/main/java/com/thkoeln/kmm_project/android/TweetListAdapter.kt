@@ -23,7 +23,7 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
 
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-    
+
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.tweet, null, true)
 
@@ -41,7 +41,6 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         tweetContent.text = tweet[position].tweetContent
 
         likeButton.setOnClickListener {
-            tweet[position].changeLikedStatus()
             changeButtonColor(likeButton, tweet[position].liked)
 
             notifyDataSetChanged() //And refresh the adapter
