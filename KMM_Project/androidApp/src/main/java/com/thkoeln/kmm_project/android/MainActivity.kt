@@ -2,8 +2,6 @@ package com.thkoeln.kmm_project.android
 
 import android.os.Bundle
 import android.view.Menu
-import android.widget.RelativeLayout
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,19 +11,14 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
-import com.thkoeln.kmm_project.Networking
 import kotlinx.coroutines.runBlocking
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-    private lateinit var bundle: Bundle
 
-    val client = HttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
         super.onCreate(savedInstanceState)
@@ -49,11 +42,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        //Networking test
-        //val client = Networking()
-        //val result = client.makeRequest("https://api.fabmeta.net/deck/1345")
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

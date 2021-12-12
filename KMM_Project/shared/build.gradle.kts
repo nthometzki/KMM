@@ -34,6 +34,8 @@ kotlin {
                 implementation("com.badoo.reaktive:reaktive:1.2.1")
                 implementation("com.arkivanov.essenty:lifecycle:0.2.2")
                 implementation("io.ktor:ktor-client-core:1.6.7")
+                implementation("io.ktor:ktor-client-cio:1.6.7")
+
             }
         }
         val commonTest by getting {
@@ -44,11 +46,14 @@ kotlin {
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
+                implementation("io.ktor:ktor-client-okhttp:1.6.7")
             }
         }
         val iosMain by getting
