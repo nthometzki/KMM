@@ -9,7 +9,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.observer.*
 import io.ktor.network.tls.*
 
-suspend fun networking(url: String) {
+suspend fun networking(url: String): String {
     println("KTOR STARTS")
     val httpClient: HttpClient = HttpClient {
         expectSuccess = false
@@ -22,6 +22,8 @@ suspend fun networking(url: String) {
         url(url)
         method = HttpMethod.Get
     }
-    println("HTML OUTPUT: ${htmlContent})")
+    //println("HTML OUTPUT: ${htmlContent})")
     httpClient.close()
+
+    return htmlContent
 }
