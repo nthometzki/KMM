@@ -14,14 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.*
-import com.thkoeln.kmm_project.*
+import com.thkoeln.kmm_project.main
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-
+    val main = main()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        runBlocking {
-            networking("https://en.wikipedia.org/wiki/Main_Page")
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
