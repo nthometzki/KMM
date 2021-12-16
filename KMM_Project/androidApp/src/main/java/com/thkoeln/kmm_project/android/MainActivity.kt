@@ -1,6 +1,7 @@
 package com.thkoeln.kmm_project.android
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,6 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import com.thkoeln.kmm_project.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
 
 
-    override fun onCreate(savedInstanceState: Bundle?) = runBlocking {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -42,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        runBlocking {
+            networking("https://en.wikipedia.org/wiki/Main_Page")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -14,12 +14,13 @@ import com.badoo.reaktive.scheduler.mainScheduler
 import com.badoo.reaktive.single.map
 import com.badoo.reaktive.single.singleFromFunction
 import com.badoo.reaktive.single.subscribeOn
-import com.thkoeln.kmm_project.Networking
 import com.thkoeln.kmm_project.Tweet
+import com.thkoeln.kmm_project.networking
 //import android.content.Intent
 import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import io.ktor.client.*
+import kotlinx.coroutines.*
 
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
@@ -56,8 +57,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
-            val network = Networking()
-
+            //val networking = networking()
         }
 
     private object ReducerImpl : Reducer<State, Result> {
