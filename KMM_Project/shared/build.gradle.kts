@@ -35,6 +35,7 @@ kotlin {
                 implementation("com.arkivanov.essenty:lifecycle:0.2.2")
                 implementation("io.ktor:ktor-client-core:1.6.7")
                 implementation("io.ktor:ktor-client-cio:1.6.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 
             }
         }

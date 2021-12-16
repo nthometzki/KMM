@@ -6,6 +6,6 @@ import kotlinx.coroutines.*
 @DelicateCoroutinesApi
 fun main() {
     GlobalScope.launch {
-        networking("https://en.wikipedia.org/wiki/Main_Page")
+        networking("https://google.com")
     }
 }

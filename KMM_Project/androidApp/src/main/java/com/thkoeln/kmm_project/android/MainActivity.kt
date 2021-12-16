@@ -12,16 +12,12 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.*
-import com.thkoeln.kmm_project.main
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-    val main = main()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

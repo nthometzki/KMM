@@ -21,6 +21,7 @@ import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import io.ktor.client.*
 import kotlinx.coroutines.*
+import com.thkoeln.kmm_project.main
 
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
@@ -57,7 +58,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
-            //val networking = networking()
+            val main = main()
         }
 
     private object ReducerImpl : Reducer<State, Result> {
