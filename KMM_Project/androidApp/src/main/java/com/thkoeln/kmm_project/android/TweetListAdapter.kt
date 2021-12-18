@@ -11,7 +11,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.thkoeln.kmm_project.Tweet
 
-class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>) :
+interface Listener {
+    fun onItemLiked(id: String)
+}
+
+class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>, private val listener: Listener) :
     ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
 
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
@@ -39,7 +43,9 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         tweetContent.text = tweet[position].tweetContent
 
         likeButton.setOnClickListener {
+            listener.onItemLiked(tweet[position].id)
             changeButtonColor(likeButton, tweet[position].liked)
+
 
             notifyDataSetChanged() //And refresh the adapter
         }

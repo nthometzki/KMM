@@ -15,26 +15,17 @@ import com.thkoeln.kmm_project.store.TweetStore.State
 import com.thkoeln.kmm_project.main
 
 
-
 internal interface TweetStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
+        data class ChangeTweet(val tweet: Tweet) : Intent()
+        data class ToggleLiked(val id: String) : Intent()
     }
 
     @Parcelize
     data class State(
-        val value: Array<Tweet> = arrayOf(
-            Tweet(
-                "1234",
-                "Nico T.",
-                "10 Nov 2021",
-                "Test",
-                false,
-                true
-            )
-        ),
-
+        val value: Array<Tweet> = arrayOf(),
     ) : Parcelable
 }
 
@@ -42,12 +33,16 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
 
     sealed class Result {
         class TweetAdd(val tweet: Tweet) : Result()
+        class ChangeTweet(val tweet: Tweet) : Result()
+        class ToggleLiked(val id: String) : Result()
     }
 
     private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddTweet -> dispatch(Result.TweetAdd(intent.tweet))
+                is Intent.ChangeTweet -> dispatch(Result.ChangeTweet(intent.tweet))
+                is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
     }
 
@@ -67,10 +62,25 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             }
         }
 
+
     private object ReducerImpl : Reducer<State, Result> {
+        fun <T> Array<T>.mapInPlace(transform: (T) -> Unit): Array<T> {
+            for (i in this.indices) {
+                transform(this[i])
+            }
+            return this
+        }
+
         override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> copy(value = value + result.tweet)
+                is Result.ChangeTweet -> copy()
+                is Result.ToggleLiked -> copy(value = value.mapInPlace {
+                    if (it.id == result.id) {
+                        it.liked = !it.liked
+                    }
+                    println(">>> CHANGE LIKED TO: " + it.liked)
+                })
             }
     }
 }

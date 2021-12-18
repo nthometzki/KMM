@@ -1,6 +1,5 @@
 package com.thkoeln.kmm_project.controller
 
-import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.essenty.statekeeper.StateKeeper
@@ -13,17 +12,17 @@ import com.thkoeln.kmm_project.store.TweetStoreFactory
 import com.thkoeln.kmm_project.view.TweetAddView
 import com.arkivanov.mvikotlin.extensions.reaktive.events
 import com.arkivanov.mvikotlin.extensions.reaktive.states
+import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.badoo.reaktive.observable.map
 
 
 class TweetAddController(lifecycle: Lifecycle, stateKeeper: StateKeeper) {
-    private val store = TweetStoreFactory(DefaultStoreFactory).create(stateKeeper)
+    private val store = TweetStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create(stateKeeper)
     private var binder: Binder? = null
 
     init {
         lifecycle.doOnDestroy(store::dispose)
     }
-
 
     fun onViewCreated(view: TweetAddView) {
 

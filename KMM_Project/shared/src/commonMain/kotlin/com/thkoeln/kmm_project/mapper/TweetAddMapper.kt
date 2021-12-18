@@ -14,6 +14,6 @@ internal val eventToIntent: TweetAddView.Event.() -> TweetStore.Intent =
     {
         when (this) {
             is TweetAddView.Event.TweetAdd -> TweetStore.Intent.AddTweet(tweet)
-
+            is TweetAddView.Event.ToggleLiked -> TweetStore.Intent.ToggleLiked(id)
         }
     }
