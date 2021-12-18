@@ -26,13 +26,22 @@ import com.thkoeln.kmm_project.main
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
 
-    sealed class Intent: JvmSerializable {
+    sealed class Intent : JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
     }
 
     data class State(
-        val value: Array<Tweet> = arrayOf(Tweet("1234", "Nico T.", "10 Nov 2021", "Test", false, true))
-    ): JvmSerializable
+        val value: Array<Tweet> = arrayOf(
+            Tweet(
+                "1234",
+                "Nico T.",
+                "10 Nov 2021",
+                "Test",
+                false,
+                true
+            )
+        )
+    ) : JvmSerializable
 }
 
 internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
@@ -44,12 +53,9 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
     private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
-                is Intent.AddTweet -> dispatch(Result.TweetAdd( intent.tweet))
+                is Intent.AddTweet -> dispatch(Result.TweetAdd(intent.tweet))
             }
-
-
     }
-
 
     fun create(): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(

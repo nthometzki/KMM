@@ -12,15 +12,6 @@ import com.thkoeln.kmm_project.Tweet
 class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>)
     : ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
 
-    private var items: Array<Tweet> = arrayOf()
-
-    fun setItems(items: Array<Tweet>) {
-        val oldItems = this.items
-        this.items = items
-        println(this.items)
-        //diff(oldItems, items, this)
-    }
-
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
 
@@ -49,7 +40,7 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         return rowView
     }
 
-    fun changeButtonColor(likeButton: Button, liked: Boolean) {
+    private fun changeButtonColor(likeButton: Button, liked: Boolean) {
         if(liked) {
             likeButton.setTextColor(Color.parseColor("#1B5BFF"))
         } else {
