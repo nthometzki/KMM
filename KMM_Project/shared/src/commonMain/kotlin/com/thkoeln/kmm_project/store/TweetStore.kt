@@ -19,7 +19,6 @@ internal interface TweetStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
-        data class ChangeTweet(val tweet: Tweet) : Intent()
         data class ToggleLiked(val id: String) : Intent()
     }
 
@@ -33,7 +32,6 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
 
     sealed class Result {
         class TweetAdd(val tweet: Tweet) : Result()
-        class ChangeTweet(val tweet: Tweet) : Result()
         class ToggleLiked(val id: String) : Result()
     }
 
@@ -41,7 +39,6 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddTweet -> dispatch(Result.TweetAdd(intent.tweet))
-                is Intent.ChangeTweet -> dispatch(Result.ChangeTweet(intent.tweet))
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
     }
@@ -74,7 +71,6 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
         override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> copy(value = value + result.tweet)
-                is Result.ChangeTweet -> copy()
                 is Result.ToggleLiked -> copy(value = value.mapInPlace {
                     if (it.id == result.id) {
                         it.liked = !it.liked
