@@ -20,6 +20,7 @@ internal interface TweetStore : Store<Intent, State, Nothing> {
     sealed class Intent : JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
         data class ToggleLiked(val id: String) : Intent()
+        data class AddComment(val id: String, val tweet: Tweet) : Intent()
     }
 
     @Parcelize
@@ -33,6 +34,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
     sealed class Result {
         class TweetAdd(val tweet: Tweet) : Result()
         class ToggleLiked(val id: String) : Result()
+        class AddComment(val id: String, val tweet: Tweet): Result()
     }
 
     private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
@@ -40,6 +42,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             when (intent) {
                 is Intent.AddTweet -> dispatch(Result.TweetAdd(intent.tweet))
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
+                is Intent.AddComment -> dispatch(Result.AddComment(intent.id, intent.tweet))
             }
     }
 
@@ -75,7 +78,14 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
                     if (it.id == result.id) {
                         it.liked = !it.liked
                     }
-                    println(">>> CHANGE LIKED TO: " + it.liked)
+                    println(">>> CHANGE LIKED-ID ${it.id} TO: ${it.liked}")
+                })
+                is Result.AddComment -> copy(value = value.mapInPlace {
+                    if (it.id == result.id) {
+
+                        it.comments + result.tweet
+                    }
+                    println(">>> ADDED TO ${it.id} TWEET: ${result.tweet}")
                 })
             }
     }

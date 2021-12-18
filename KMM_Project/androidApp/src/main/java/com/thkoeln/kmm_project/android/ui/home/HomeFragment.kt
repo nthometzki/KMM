@@ -1,12 +1,15 @@
 package com.thkoeln.kmm_project.android.ui.home
 
-import TweetAddViewImpl
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.essentyLifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
@@ -44,6 +47,15 @@ class HomeFragment() : Fragment(), View.OnClickListener {
         return root
     }
 
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,12 +78,15 @@ class HomeFragment() : Fragment(), View.OnClickListener {
             } else {
                 tweetArea?.visibility = View.INVISIBLE
                 fab?.visibility = View.VISIBLE
+                hideKeyboard()
             }
 
             R.id.tweet_close_button -> {
                 tweetArea?.visibility = View.INVISIBLE
                 fab?.visibility = View.VISIBLE
+                hideKeyboard()
             }
+
         }
     }
 
