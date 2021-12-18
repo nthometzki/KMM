@@ -9,6 +9,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.essentyLifecycle
+import com.arkivanov.essenty.statekeeper.StateKeeper
+import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.controller.TweetAddController
@@ -17,8 +19,8 @@ class HomeFragment() : Fragment(), View.OnClickListener {
 
     private lateinit var controller: TweetAddController
 
-    private fun createController(lifecycle: Lifecycle): TweetAddController =
-        TweetAddController(lifecycle)
+    private fun createController(lifecycle: Lifecycle, stateKeeper: StateKeeper): TweetAddController =
+        TweetAddController(lifecycle, stateKeeper)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +39,7 @@ class HomeFragment() : Fragment(), View.OnClickListener {
         val submitButton = root.findViewById<Button>(R.id.tweet_submit_button)
         submitButton.setOnClickListener(this)
 
-        controller = createController(essentyLifecycle())
+        controller = createController(essentyLifecycle(), stateKeeper())
 
         return root
     }

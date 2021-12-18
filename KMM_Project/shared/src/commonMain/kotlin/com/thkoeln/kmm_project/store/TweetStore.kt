@@ -1,27 +1,19 @@
 package com.thkoeln.kmm_project.store
 
-import com.arkivanov.mvikotlin.core.lifecycle.Lifecycle.*
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
+import com.arkivanov.essenty.statekeeper.StateKeeper
+import com.arkivanov.essenty.statekeeper.consume
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.arkivanov.mvikotlin.core.store.create
-import com.arkivanov.mvikotlin.core.store.*
-import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
-import com.badoo.reaktive.scheduler.computationScheduler
-import com.badoo.reaktive.scheduler.mainScheduler
-import com.badoo.reaktive.single.map
-import com.badoo.reaktive.single.singleFromFunction
-import com.badoo.reaktive.single.subscribeOn
 import com.thkoeln.kmm_project.Tweet
-import com.thkoeln.kmm_project.networking
-//import android.content.Intent
 import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
-import io.ktor.client.*
-import kotlinx.coroutines.*
 import com.thkoeln.kmm_project.main
+
 
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
@@ -30,6 +22,7 @@ internal interface TweetStore : Store<Intent, State, Nothing> {
         data class AddTweet(val tweet: Tweet) : Intent()
     }
 
+    @Parcelize
     data class State(
         val value: Array<Tweet> = arrayOf(
             Tweet(
@@ -40,8 +33,9 @@ internal interface TweetStore : Store<Intent, State, Nothing> {
                 false,
                 true
             )
-        )
-    ) : JvmSerializable
+        ),
+
+    ) : Parcelable
 }
 
 internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
@@ -57,14 +51,20 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             }
     }
 
-    fun create(): TweetStore =
+    fun create(stateKeeper: StateKeeper): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "CounterStore",
-            initialState = State(),
+            initialState = stateKeeper.consume(key = "TweetStoreState") ?: State(),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
             val main = main()
+
+        }.also {
+            stateKeeper.register(key = "TweetStoreState") {
+                println(">>> STATE IN ALSO: " + it.state)
+                it.state.copy(value = it.state.value) // We can reset any transient state here
+            }
         }
 
     private object ReducerImpl : Reducer<State, Result> {

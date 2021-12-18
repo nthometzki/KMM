@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.4.10"
+    id("kotlin-parcelize") // Apply the plugin for Android
 }
 
 kotlin {
@@ -34,10 +35,11 @@ kotlin {
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
                 implementation("com.badoo.reaktive:reaktive:1.2.1")
                 implementation("com.arkivanov.essenty:lifecycle:0.2.2")
+                implementation("com.arkivanov.essenty:state-keeper:0.2.2")
+                implementation("com.arkivanov.essenty:instance-keeper:0.2.2")
                 implementation("io.ktor:ktor-client-core:1.6.7")
                 implementation("io.ktor:ktor-client-cio:1.6.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-
             }
         }
         val commonTest by getting {

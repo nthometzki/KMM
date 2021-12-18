@@ -7,10 +7,18 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.thkoeln.kmm_project.Tweet
 
-class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>)
-    : ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
+class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>) :
+    ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
+
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+        val fragmentTransaction = beginTransaction()
+        fragmentTransaction.func()
+        fragmentTransaction.commit()
+    }
 
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -24,7 +32,6 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
 
         val likeButton = rowView.findViewById<Button>(R.id.tweet_like_button)
 
-        println(tweet[position].userName)
         changeButtonColor(likeButton, tweet[position].liked)
 
         userName.text = tweet[position].userName
@@ -37,11 +44,19 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
             notifyDataSetChanged() //And refresh the adapter
         }
 
+        val commentButton = rowView.findViewById<Button>(R.id.tweet_comment_button)
+
+
+        commentButton.setOnClickListener {
+            // TODO: go to comment section by fragmentmanager
+        }
+
         return rowView
     }
 
+
     private fun changeButtonColor(likeButton: Button, liked: Boolean) {
-        if(liked) {
+        if (liked) {
             likeButton.setTextColor(Color.parseColor("#1B5BFF"))
         } else {
             likeButton.setTextColor(Color.parseColor("#AAAAAA"))

@@ -1,11 +1,10 @@
 package com.thkoeln.kmm_project.controller
 
+import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.doOnDestroy
+import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.mvikotlin.core.binder.Binder
-import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
-import com.arkivanov.mvikotlin.core.lifecycle.Lifecycle as LifeCycleArkinov
-import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.reaktive.bind
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.thkoeln.kmm_project.mapper.eventToIntent
@@ -17,8 +16,8 @@ import com.arkivanov.mvikotlin.extensions.reaktive.states
 import com.badoo.reaktive.observable.map
 
 
-class TweetAddController(lifecycle: Lifecycle) {
-    private val store = TweetStoreFactory(DefaultStoreFactory).create()
+class TweetAddController(lifecycle: Lifecycle, stateKeeper: StateKeeper) {
+    private val store = TweetStoreFactory(DefaultStoreFactory).create(stateKeeper)
     private var binder: Binder? = null
 
     init {

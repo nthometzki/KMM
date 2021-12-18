@@ -38,6 +38,7 @@ class TweetAddViewImpl(private val root: View, private val activity: Activity) :
                 fab?.visibility = View.VISIBLE
             }
         }
+
     }
 
     override fun render(model: Model) {
