@@ -11,12 +11,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.arkivanov.essenty.lifecycle.essentyLifecycle
+import com.arkivanov.essenty.statekeeper.StateKeeper
+import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
+import com.thkoeln.kmm_project.android.ui.home.TweetViewImpl
+import com.thkoeln.kmm_project.controller.TweetController
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
+    private lateinit var controller: TweetController
+
+    private fun createController(stateKeeper: StateKeeper): TweetController =
+        TweetController(stateKeeper)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
+        controller = createController(stateKeeper())
+        controller.onViewCreated(TweetViewImpl(binding.root, this))
+
+        controller.onStart()
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -50,4 +64,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }

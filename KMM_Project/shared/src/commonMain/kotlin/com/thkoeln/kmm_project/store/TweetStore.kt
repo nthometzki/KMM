@@ -34,7 +34,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
     sealed class Result {
         class TweetAdd(val tweet: Tweet) : Result()
         class ToggleLiked(val id: String) : Result()
-        class AddComment(val id: String, val tweet: Tweet): Result()
+        class AddComment(val id: String, val tweet: Tweet) : Result()
     }
 
     private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
@@ -53,14 +53,16 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
+
             val main = main()
 
-        }.also {
-            stateKeeper.register(key = "TweetStoreState") {
-                println(">>> STATE IN ALSO: " + it.state)
-                it.state.copy(value = it.state.value) // We can reset any transient state here
-            }
         }
+            .also {
+                stateKeeper.register(key = "TweetStoreState") {
+                    println(">>> STATE IN ALSO: " + it.state)
+                    it.state.copy(value = it.state.value) // We can reset any transient state here
+                }
+            }
 
 
     private object ReducerImpl : Reducer<State, Result> {
@@ -83,7 +85,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
                 is Result.AddComment -> copy(value = value.mapInPlace {
                     if (it.id == result.id) {
 
-                        it.comments + result.tweet
+                        //it.comments + result.tweet
                     }
                     println(">>> ADDED TO ${it.id} TWEET: ${result.tweet}")
                 })

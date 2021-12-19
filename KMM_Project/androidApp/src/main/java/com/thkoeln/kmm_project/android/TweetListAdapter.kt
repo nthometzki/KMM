@@ -7,9 +7,13 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.thkoeln.kmm_project.datastructures.Tweet
+import com.thkoeln.kmm_project.android.tweet.TweetFragment
+import androidx.navigation.findNavController
+
 
 interface Listener {
     fun onItemLiked(id: String)
@@ -18,11 +22,6 @@ interface Listener {
 class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>, private val listener: Listener) :
     ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
 
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-        val fragmentTransaction = beginTransaction()
-        fragmentTransaction.func()
-        fragmentTransaction.commit()
-    }
 
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -51,10 +50,17 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         }
 
         val commentButton = rowView.findViewById<Button>(R.id.tweet_comment_button)
-
+        val navController = context.findNavController(R.id.nav_host_fragment_content_main)
 
         commentButton.setOnClickListener {
             // TODO: go to comment section by fragmentmanager
+            println(">>> CHANGE FRAGMENT")
+
+            navController.navigate(R.id.nav_tweet)
+
+           /* val fr = (context as FragmentActivity).supportFragmentManager.beginTransaction()
+            fr.replace(R.id.nav_host_fragment_content_main, TweetFragment())
+            fr.commit()*/
         }
 
         return rowView

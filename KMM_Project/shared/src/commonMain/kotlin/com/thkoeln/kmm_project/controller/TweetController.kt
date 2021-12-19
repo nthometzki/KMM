@@ -16,13 +16,11 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.badoo.reaktive.observable.map
 
 
-class TweetAddController(lifecycle: Lifecycle, stateKeeper: StateKeeper) {
+class TweetController(stateKeeper: StateKeeper) {
     private val store = TweetStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create(stateKeeper)
     private var binder: Binder? = null
 
-    init {
-        lifecycle.doOnDestroy(store::dispose)
-    }
+
 
     fun onViewCreated(view: TweetView) {
 

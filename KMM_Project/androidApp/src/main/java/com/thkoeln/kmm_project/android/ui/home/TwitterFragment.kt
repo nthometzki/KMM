@@ -15,14 +15,14 @@ import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.android.R
-import com.thkoeln.kmm_project.controller.TweetAddController
+import com.thkoeln.kmm_project.controller.TweetController
 
-class HomeFragment() : Fragment(), View.OnClickListener {
+class TwitterFragment() : Fragment(), View.OnClickListener {
 
-    private lateinit var controller: TweetAddController
+   /* private lateinit var controller: TweetController
 
-    private fun createController(lifecycle: Lifecycle, stateKeeper: StateKeeper): TweetAddController =
-        TweetAddController(lifecycle, stateKeeper)
+    private fun createController(lifecycle: Lifecycle): TweetController =
+        TweetController(lifecycle)*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class HomeFragment() : Fragment(), View.OnClickListener {
         val submitButton = root.findViewById<Button>(R.id.tweet_submit_button)
         submitButton.setOnClickListener(this)
 
-        controller = createController(essentyLifecycle(), stateKeeper())
+        //controller = createController(essentyLifecycle())
 
         return root
     }
@@ -56,12 +56,6 @@ class HomeFragment() : Fragment(), View.OnClickListener {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        activity?.let { TweetViewImpl(view, it) }?.let { controller.onViewCreated(it) }
-        controller.onStart()
-    }
 
 
     override fun onClick(v: View?) {
@@ -88,6 +82,7 @@ class HomeFragment() : Fragment(), View.OnClickListener {
 
         }
     }
+
 
 }
 
