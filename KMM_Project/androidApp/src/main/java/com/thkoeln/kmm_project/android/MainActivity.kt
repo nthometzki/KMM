@@ -1,7 +1,6 @@
 package com.thkoeln.kmm_project.android
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -11,13 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.arkivanov.essenty.lifecycle.Lifecycle
-import com.arkivanov.essenty.lifecycle.essentyLifecycle
-import com.arkivanov.essenty.statekeeper.StateKeeper
-import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
-import com.thkoeln.kmm_project.android.ui.home.TweetViewImpl
-import com.thkoeln.kmm_project.controller.TweetController
 
 
 class MainActivity : AppCompatActivity() {

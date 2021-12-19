@@ -53,9 +53,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
-
             val main = main()
-
         }
 
 

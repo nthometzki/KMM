@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.thkoeln.kmm_project.android.ui.home.TwitterFragment"
+        android:name="com.thkoeln.kmm_project.android.ui.twitter.TwitterFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
 
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/nav_tweet"
-        android:name="com.thkoeln.kmm_project.android.tweet.TweetFragment"
+        android:name="com.thkoeln.kmm_project.android.comment.CommentFragment"
         android:label="Tweet"
         tools:layout="@layout/comment_section" />
 

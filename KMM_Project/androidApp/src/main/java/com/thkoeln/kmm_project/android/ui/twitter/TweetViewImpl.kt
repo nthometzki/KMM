@@ -1,4 +1,4 @@
-package com.thkoeln.kmm_project.android.ui.home
+package com.thkoeln.kmm_project.android.ui.twitter
 
 import android.app.Activity
 import android.content.Context
@@ -8,9 +8,8 @@ import android.widget.*
 import com.arkivanov.mvikotlin.core.view.BaseMviView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.android.Listener
 import com.thkoeln.kmm_project.android.R
-import com.thkoeln.kmm_project.android.TweetListAdapter
+import com.thkoeln.kmm_project.datastructures.Comment
 import com.thkoeln.kmm_project.view.TweetView
 import com.thkoeln.kmm_project.view.TweetView.Event
 import com.thkoeln.kmm_project.view.TweetView.Model
@@ -35,15 +34,25 @@ class TweetViewImpl(root: View, private val activity: Activity) :
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
 
+            val id = UUID.randomUUID().toString()
             dispatch(
                 Event.TweetAdd(
                     Tweet(
-                        UUID.randomUUID().toString(),
+                        id,
                         "User A.",              // TODO add real user name
                         current.format(formatter),
                         input.text.toString(),
                         false,
-                        arrayOf()
+                        arrayOf(
+                            Comment(
+                                id,
+                                UUID.randomUUID().toString(),
+                                "User B",
+                                current.format(formatter),
+                                "LMAO",
+                                false
+                            )
+                        )
                     )
                 )
             )

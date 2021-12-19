@@ -1,5 +1,6 @@
-package com.thkoeln.kmm_project.android.tweet
+package com.thkoeln.kmm_project.android.comment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -7,19 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.arkivanov.essenty.lifecycle.Lifecycle
-import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.thkoeln.kmm_project.android.R
-import com.thkoeln.kmm_project.android.ui.home.TweetViewImpl
-import com.thkoeln.kmm_project.controller.TweetController
 import com.thkoeln.kmm_project.datastructures.Tweet
-import org.w3c.dom.Text
 
-class TweetFragment() : Fragment() {
+class CommentFragment() : Fragment() {
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +34,7 @@ class TweetFragment() : Fragment() {
             user.text = tweetData.userName
 
             val date = root.findViewById<TextView>(R.id.comment_tweet_date)
-            date.text = tweetData.tweetDate
+            date.text = "• " + tweetData.tweetDate
 
             val content = root.findViewById<TextView>(R.id.comment_tweet_content)
             content.text = tweetData.tweetContent
@@ -45,7 +43,11 @@ class TweetFragment() : Fragment() {
 
 
         // Creating data for comments
-
+        if(tweetData != null && tweetData.comments.isNotEmpty()) {
+            val listView = root.findViewById<ListView>(R.id.comment_list_view)
+            val adapter = activity?.let { CommentListAdapter(it, tweetData.comments, null) }
+            listView.adapter = adapter
+        }
 
 
 

@@ -1,4 +1,4 @@
-package com.thkoeln.kmm_project.android.ui.home
+package com.thkoeln.kmm_project.android.ui.twitter
 
 import android.app.Activity
 import android.content.Context
@@ -9,12 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.arkivanov.essenty.lifecycle.Lifecycle
-import com.arkivanov.essenty.lifecycle.essentyLifecycle
-import com.arkivanov.essenty.statekeeper.StateKeeper
-import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.thkoeln.kmm_project.android.MainActivity
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.controller.TweetController
 
