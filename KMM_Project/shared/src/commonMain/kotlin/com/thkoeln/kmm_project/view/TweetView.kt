@@ -1,9 +1,9 @@
 package com.thkoeln.kmm_project.view
 
 import com.arkivanov.mvikotlin.core.view.MviView
-import com.thkoeln.kmm_project.Tweet
+import com.thkoeln.kmm_project.datastructures.Tweet
 
-interface TweetAddView : MviView<TweetAddView.Model, TweetAddView.Event> {
+interface TweetView : MviView<TweetView.Model, TweetView.Event> {
 
     data class Model(
         val tweets: Array<Tweet>

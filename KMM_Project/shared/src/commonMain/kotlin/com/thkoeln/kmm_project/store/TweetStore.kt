@@ -9,7 +9,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
-import com.thkoeln.kmm_project.Tweet
+import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import com.thkoeln.kmm_project.main

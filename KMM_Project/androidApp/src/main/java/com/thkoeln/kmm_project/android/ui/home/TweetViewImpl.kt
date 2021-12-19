@@ -5,16 +5,15 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.fragment.app.Fragment
 import com.arkivanov.mvikotlin.core.view.BaseMviView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.thkoeln.kmm_project.Tweet
+import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.android.Listener
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.android.TweetListAdapter
-import com.thkoeln.kmm_project.view.TweetAddView
-import com.thkoeln.kmm_project.view.TweetAddView.Event
-import com.thkoeln.kmm_project.view.TweetAddView.Model
+import com.thkoeln.kmm_project.view.TweetView
+import com.thkoeln.kmm_project.view.TweetView.Event
+import com.thkoeln.kmm_project.view.TweetView.Model
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -22,14 +21,12 @@ import java.time.format.FormatStyle
 import java.util.*
 
 
-class TweetAddViewImpl(root: View, private val activity: Activity) :
-    BaseMviView<Model, Event>(), TweetAddView {
+class TweetViewImpl(root: View, private val activity: Activity) :
+    BaseMviView<Model, Event>(), TweetView {
     private var listView: ListView = root.findViewById(R.id.tweet_list_view)
 
 
     init {
-
-
         val input = root.findViewById<EditText>(R.id.tweet_input)
         val tweetArea = root.findViewById<RelativeLayout>(R.id.tweeting)
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)
@@ -53,7 +50,7 @@ class TweetAddViewImpl(root: View, private val activity: Activity) :
             tweetArea?.visibility = View.INVISIBLE
             fab?.visibility = View.VISIBLE
             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(root.getWindowToken(), 0)
+            imm.hideSoftInputFromWindow(root.windowToken, 0)
         }
 
     }

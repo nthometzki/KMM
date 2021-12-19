@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.essentyLifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
@@ -60,7 +59,7 @@ class HomeFragment() : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.let { TweetAddViewImpl(view, it) }?.let { controller.onViewCreated(it) }
+        activity?.let { TweetViewImpl(view, it) }?.let { controller.onViewCreated(it) }
         controller.onStart()
     }
 

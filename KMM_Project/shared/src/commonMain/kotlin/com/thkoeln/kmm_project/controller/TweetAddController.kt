@@ -6,10 +6,10 @@ import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.mvikotlin.core.binder.Binder
 import com.arkivanov.mvikotlin.extensions.reaktive.bind
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import com.thkoeln.kmm_project.mapper.eventToIntent
-import com.thkoeln.kmm_project.mapper.stateToModel
+import com.thkoeln.kmm_project.mapper.EVENT_TO_INTENT
+import com.thkoeln.kmm_project.mapper.STATE_TO_MODEL
 import com.thkoeln.kmm_project.store.TweetStoreFactory
-import com.thkoeln.kmm_project.view.TweetAddView
+import com.thkoeln.kmm_project.view.TweetView
 import com.arkivanov.mvikotlin.extensions.reaktive.events
 import com.arkivanov.mvikotlin.extensions.reaktive.states
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
@@ -24,12 +24,12 @@ class TweetAddController(lifecycle: Lifecycle, stateKeeper: StateKeeper) {
         lifecycle.doOnDestroy(store::dispose)
     }
 
-    fun onViewCreated(view: TweetAddView) {
+    fun onViewCreated(view: TweetView) {
 
         binder = bind {
-            store.states.map(stateToModel) bindTo view
+            store.states.map(STATE_TO_MODEL) bindTo view
             // Use store.labels to bind Labels to a consumer
-            view.events.map(eventToIntent) bindTo store
+            view.events.map(EVENT_TO_INTENT) bindTo store
         }
     }
 

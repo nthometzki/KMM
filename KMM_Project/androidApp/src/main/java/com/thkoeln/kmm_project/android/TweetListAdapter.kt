@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.thkoeln.kmm_project.Tweet
+import com.thkoeln.kmm_project.datastructures.Tweet
 
 interface Listener {
     fun onItemLiked(id: String)
