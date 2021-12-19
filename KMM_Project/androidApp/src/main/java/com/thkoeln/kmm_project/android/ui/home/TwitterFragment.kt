@@ -14,15 +14,16 @@ import com.arkivanov.essenty.lifecycle.essentyLifecycle
 import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.essenty.statekeeper.stateKeeper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.thkoeln.kmm_project.android.MainActivity
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.controller.TweetController
 
 class TwitterFragment() : Fragment(), View.OnClickListener {
 
-   /* private lateinit var controller: TweetController
+    lateinit var controller: TweetController
 
-    private fun createController(lifecycle: Lifecycle): TweetController =
-        TweetController(lifecycle)*/
+    private fun createController(): TweetController =
+        TweetController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,16 +39,16 @@ class TwitterFragment() : Fragment(), View.OnClickListener {
         val closeButton = root.findViewById<ImageButton>(R.id.tweet_close_button)
         closeButton.setOnClickListener(this)
 
-        val submitButton = root.findViewById<Button>(R.id.tweet_submit_button)
-        submitButton.setOnClickListener(this)
+        println(">>> CREATE VIEW TWITTER FRAGMENT")
 
-        //controller = createController(essentyLifecycle())
+        controller = createController()
 
         return root
     }
 
     fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
@@ -55,7 +56,11 @@ class TwitterFragment() : Fragment(), View.OnClickListener {
         view?.let { activity?.hideKeyboard(it) }
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity?.let { TweetViewImpl(view, it) }?.let { controller.onViewCreated(it) }
+        controller.onStart()
+    }
 
 
     override fun onClick(v: View?) {

@@ -27,6 +27,7 @@ class TweetViewImpl(root: View, private val activity: Activity) :
 
 
     init {
+        println(">>> INIT ")
         val input = root.findViewById<EditText>(R.id.tweet_input)
         val tweetArea = root.findViewById<RelativeLayout>(R.id.tweeting)
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)
@@ -57,6 +58,7 @@ class TweetViewImpl(root: View, private val activity: Activity) :
 
     override fun render(model: Model) {
         super.render(model)
+        println(">>> MODEL $model")
         val adapter = TweetListAdapter(activity, model.tweets, object : Listener {
             override fun onItemLiked(id: String) {
                 dispatch(Event.ToggleLiked(id))

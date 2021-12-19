@@ -46,10 +46,10 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             }
     }
 
-    fun create(stateKeeper: StateKeeper): TweetStore =
+    fun create(): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "CounterStore",
-            initialState = stateKeeper.consume(key = "TweetStoreState") ?: State(),
+            initialState =  State(),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
@@ -57,12 +57,7 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             val main = main()
 
         }
-            .also {
-                stateKeeper.register(key = "TweetStoreState") {
-                    println(">>> STATE IN ALSO: " + it.state)
-                    it.state.copy(value = it.state.value) // We can reset any transient state here
-                }
-            }
+
 
 
     private object ReducerImpl : Reducer<State, Result> {

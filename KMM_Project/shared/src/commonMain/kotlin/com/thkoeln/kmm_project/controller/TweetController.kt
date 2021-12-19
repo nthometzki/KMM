@@ -16,8 +16,8 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.badoo.reaktive.observable.map
 
 
-class TweetController(stateKeeper: StateKeeper) {
-    private val store = TweetStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create(stateKeeper)
+class TweetController() {
+    private val store = TweetStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create()
     private var binder: Binder? = null
 
 

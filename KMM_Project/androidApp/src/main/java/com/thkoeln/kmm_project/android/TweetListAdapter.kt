@@ -4,14 +4,12 @@ package com.thkoeln.kmm_project.android
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.core.os.bundleOf
 import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.android.tweet.TweetFragment
 import androidx.navigation.findNavController
 
 
@@ -53,14 +51,9 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         val navController = context.findNavController(R.id.nav_host_fragment_content_main)
 
         commentButton.setOnClickListener {
-            // TODO: go to comment section by fragmentmanager
-            println(">>> CHANGE FRAGMENT")
-
-            navController.navigate(R.id.nav_tweet)
-
-           /* val fr = (context as FragmentActivity).supportFragmentManager.beginTransaction()
-            fr.replace(R.id.nav_host_fragment_content_main, TweetFragment())
-            fr.commit()*/
+            val bundle = Bundle()
+            bundle.putParcelable("tweet", tweet[position])
+            navController.navigate(R.id.nav_tweet, bundle)
         }
 
         return rowView

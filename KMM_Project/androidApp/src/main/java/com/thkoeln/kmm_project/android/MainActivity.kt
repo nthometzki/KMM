@@ -23,10 +23,7 @@ import com.thkoeln.kmm_project.controller.TweetController
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
-    private lateinit var controller: TweetController
 
-    private fun createController(stateKeeper: StateKeeper): TweetController =
-        TweetController(stateKeeper)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +37,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
-        controller = createController(stateKeeper())
-        controller.onViewCreated(TweetViewImpl(binding.root, this))
 
-        controller.onStart()
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
