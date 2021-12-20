@@ -108,10 +108,10 @@
         android:layout_height="1dp"
         android:background="#c0c0c0"
 
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintTop_toTopOf="@+id/comment_edit_text" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/comment_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
