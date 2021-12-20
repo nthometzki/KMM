@@ -9,14 +9,16 @@ import android.widget.*
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.datastructures.Comment
 
-
 interface Listener {
     fun onItemLiked(id: String)
 }
 
-class CommentListAdapter(private val context: Activity, private val comments: Array<Comment>, private val listener: Listener) :
+class CommentListAdapter(
+    private val context: Activity,
+    private val comments: Array<Comment>,
+    private val listener: Listener
+) :
     ArrayAdapter<Comment>(context, R.layout.comment_tweet, comments) {
-
 
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -41,11 +43,8 @@ class CommentListAdapter(private val context: Activity, private val comments: Ar
             notifyDataSetChanged() //And refresh the adapter
         }
 
-
-
         return rowView
     }
-
 
     private fun changeButtonColor(likeButton: Button, liked: Boolean) {
         if (liked) {

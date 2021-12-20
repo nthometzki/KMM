@@ -1,8 +1,5 @@
 package com.thkoeln.kmm_project.controller
 
-import com.arkivanov.essenty.lifecycle.Lifecycle
-import com.arkivanov.essenty.lifecycle.doOnDestroy
-import com.arkivanov.essenty.statekeeper.StateKeeper
 import com.arkivanov.mvikotlin.core.binder.Binder
 import com.arkivanov.mvikotlin.extensions.reaktive.bind
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
@@ -21,9 +18,7 @@ class TweetController() {
     private var binder: Binder? = null
 
 
-
     fun onViewCreated(view: TweetView) {
-
         binder = bind {
             store.states.map(STATE_TO_MODEL) bindTo view
             // Use store.labels to bind Labels to a consumer

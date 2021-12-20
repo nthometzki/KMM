@@ -14,8 +14,9 @@ import com.thkoeln.kmm_project.store.CommentStoreFactory
 import com.thkoeln.kmm_project.view.CommentView
 
 
-class CommentController(val comments: Array<Comment>) {
-    private val store = CommentStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create(comments)
+class CommentController(comments: Array<Comment>) {
+    private val store =
+        CommentStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create(comments)
     private var binder: Binder? = null
 
 

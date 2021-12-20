@@ -8,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.thkoeln.kmm_project.android.R
-import com.thkoeln.kmm_project.android.ui.twitter.TweetViewImpl
 import com.thkoeln.kmm_project.controller.CommentController
 import com.thkoeln.kmm_project.datastructures.Tweet
 
@@ -31,7 +29,6 @@ class CommentFragment() : Fragment() {
 
         val tweetData = arguments?.getParcelable<Tweet>("tweet")
 
-        // Creating data for original tweet
         if (tweetData != null) {
             val user = root.findViewById<TextView>(R.id.comment_user_name)
             user.text = tweetData.userName
@@ -48,12 +45,10 @@ class CommentFragment() : Fragment() {
 
             val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
             numberOfComments.text = "${tweetData.comments.size} Comments"
-            
-            // Creating data for comments
-            controller = CommentController(tweetData.comments)
-            activity?.let { CommentViewImpl(root, it, ) }
-                ?.let { controller.onViewCreated(it) }
 
+            controller = CommentController(tweetData.comments)
+            activity?.let { CommentViewImpl(root, it) }
+                ?.let { controller.onViewCreated(it) }
         }
 
         return root

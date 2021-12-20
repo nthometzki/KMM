@@ -16,16 +16,8 @@ class CommentViewImpl(
 ) : BaseMviView<Model, Event>(), CommentView {
     private var listView: ListView = root.findViewById(R.id.comment_list_view)
 
-    init {
-
-
-    }
-
     override fun render(model: Model) {
         super.render(model)
-        println(">>> MODEL $model")
-
-
         val adapter = CommentListAdapter(activity, model.comments, object : Listener {
             override fun onItemLiked(id: String) {
                 dispatch(Event.ToggleLiked(id))

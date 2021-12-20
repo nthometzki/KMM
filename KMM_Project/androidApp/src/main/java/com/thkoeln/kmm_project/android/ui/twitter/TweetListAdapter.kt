@@ -16,9 +16,12 @@ interface TweetListener {
     fun onItemLiked(id: String)
 }
 
-class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>, private val listener: TweetListener) :
+class TweetListAdapter(
+    private val context: Activity,
+    private val tweet: Array<Tweet>,
+    private val listener: TweetListener
+) :
     ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
-
 
     @SuppressLint("SetTextI18n")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
@@ -41,8 +44,6 @@ class TweetListAdapter(private val context: Activity, private val tweet: Array<T
         likeButton.setOnClickListener {
             listener.onItemLiked(tweet[position].id)
             changeButtonColor(likeButton, tweet[position].liked)
-
-
             notifyDataSetChanged() //And refresh the adapter
         }
 

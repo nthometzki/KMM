@@ -26,7 +26,6 @@ class TweetViewImpl(root: View, private val activity: Activity) :
 
 
     init {
-        println(">>> INIT TWEET VIEW IMPL")
         val input = root.findViewById<EditText>(R.id.tweet_input)
         val tweetArea = root.findViewById<RelativeLayout>(R.id.tweeting)
         val fab = root.findViewById<FloatingActionButton>(R.id.fab)

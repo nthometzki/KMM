@@ -34,8 +34,6 @@ class TwitterFragment() : Fragment(), View.OnClickListener {
         val closeButton = root.findViewById<ImageButton>(R.id.tweet_close_button)
         closeButton.setOnClickListener(this)
 
-        println(">>> CREATE VIEW TWITTER FRAGMENT")
-
         controller = createController()
 
         return root
