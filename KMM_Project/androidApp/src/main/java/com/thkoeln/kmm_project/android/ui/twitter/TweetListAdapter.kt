@@ -12,11 +12,11 @@ import androidx.navigation.findNavController
 import com.thkoeln.kmm_project.android.R
 
 
-interface Listener {
+interface TweetListener {
     fun onItemLiked(id: String)
 }
 
-class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>, private val listener: Listener) :
+class TweetListAdapter(private val context: Activity, private val tweet: Array<Tweet>, private val listener: TweetListener) :
     ArrayAdapter<Tweet>(context, R.layout.tweet, tweet) {
 
 

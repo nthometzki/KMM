@@ -14,5 +14,7 @@
     <string name="like">Like</string>
     <string name="twittern">Twittern</string>
     <string name="was_passiert_gerade">Was passiert gerade?</string>
+    <string name="what_s_happening_right_now">What\'s happening right now?</string>
+    <string name="your_reply">Your reply...</string>
 
 </resources>

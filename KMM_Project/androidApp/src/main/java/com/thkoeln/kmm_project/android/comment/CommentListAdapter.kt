@@ -3,13 +3,9 @@ package com.thkoeln.kmm_project.android.comment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Color
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
-import com.thkoeln.kmm_project.datastructures.Tweet
-import androidx.navigation.findNavController
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.datastructures.Comment
 
@@ -18,7 +14,7 @@ interface Listener {
     fun onItemLiked(id: String)
 }
 
-class CommentListAdapter(private val context: Activity, private val comments: Array<Comment>, private val listener: Listener?) :
+class CommentListAdapter(private val context: Activity, private val comments: Array<Comment>, private val listener: Listener) :
     ArrayAdapter<Comment>(context, R.layout.comment_tweet, comments) {
 
 
@@ -40,7 +36,7 @@ class CommentListAdapter(private val context: Activity, private val comments: Ar
         tweetContent.text = comments[position].tweetContent
 
         likeButton.setOnClickListener {
-            //listener.onItemLiked(comments[position].id)
+            listener.onItemLiked(comments[position].id)
             changeButtonColor(likeButton, comments[position].liked)
             notifyDataSetChanged() //And refresh the adapter
         }

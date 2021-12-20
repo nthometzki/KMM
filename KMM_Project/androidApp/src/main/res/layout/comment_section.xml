@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <TextView
-        android:id="@+id/numberLikes"
+        android:id="@+id/number_likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100 Likes"
@@ -78,14 +78,14 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
-        android:id="@+id/numberComments"
+        android:id="@+id/number_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10 Comments"
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
 
-        app:layout_constraintStart_toEndOf="@+id/numberLikes"
+        app:layout_constraintStart_toEndOf="@+id/number_likes"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <View
@@ -94,13 +94,31 @@
         android:layout_height="0.5dp"
         android:background="#c0c0c0"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/numberLikes"/>
+        app:layout_constraintTop_toBottomOf="@+id/number_likes"/>
 
     <ListView
         android:id="@+id/comment_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/numberLikes" />
+        app:layout_constraintTop_toBottomOf="@+id/number_likes" />
+
+    <View
+        android:id="@+id/divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c0c0c0"
+
+        app:layout_constraintTop_toTopOf="@+id/editText" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:hint="@string/your_reply"
+        android:inputType="textPersonName"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

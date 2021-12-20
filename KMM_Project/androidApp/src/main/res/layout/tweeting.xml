@@ -65,7 +65,7 @@
             android:layout_below="@+id/mainButtonLayout"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="20dp"
-            android:hint="@string/was_passiert_gerade"
+            android:hint="@string/what_s_happening_right_now"
             android:inputType="textPersonName"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -12,10 +12,13 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.thkoeln.kmm_project.android.R
+import com.thkoeln.kmm_project.android.ui.twitter.TweetViewImpl
+import com.thkoeln.kmm_project.controller.CommentController
 import com.thkoeln.kmm_project.datastructures.Tweet
 
 class CommentFragment() : Fragment() {
 
+    private lateinit var controller: CommentController
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -26,10 +29,10 @@ class CommentFragment() : Fragment() {
 
         val root = inflater.inflate(R.layout.comment_section, container, false)
 
-         val tweetData = arguments?.getParcelable<Tweet>("tweet")
+        val tweetData = arguments?.getParcelable<Tweet>("tweet")
 
         // Creating data for original tweet
-        if(tweetData != null)  {
+        if (tweetData != null) {
             val user = root.findViewById<TextView>(R.id.comment_user_name)
             user.text = tweetData.userName
 
@@ -38,24 +41,34 @@ class CommentFragment() : Fragment() {
 
             val content = root.findViewById<TextView>(R.id.comment_tweet_content)
             content.text = tweetData.tweetContent
+
+            val numberOfLikes = root.findViewById<TextView>(R.id.number_likes)
+            // TODO fetch number of likes after backend change
+            numberOfLikes.text = "0 Likes"
+
+            val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
+            numberOfComments.text = "${tweetData.comments.size} Comments"
+            
+            // Creating data for comments
+            controller = CommentController(tweetData.comments)
+            activity?.let { CommentViewImpl(root, it, ) }
+                ?.let { controller.onViewCreated(it) }
+
         }
-
-
-
-        // Creating data for comments
-        if(tweetData != null && tweetData.comments.isNotEmpty()) {
-            val listView = root.findViewById<ListView>(R.id.comment_list_view)
-            val adapter = activity?.let { CommentListAdapter(it, tweetData.comments, null) }
-            listView.adapter = adapter
-        }
-
-
 
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        controller.onStart()
+
+    }
+
     fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
