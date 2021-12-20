@@ -7,15 +7,16 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 
 @Serializable
-data class Data(val one: String, val key: String)
+data class Data(val id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
+
 
 @DelicateCoroutinesApi
 fun main() {
     GlobalScope.launch {
-        val response = networking("http://echo.jsontest.com/key/value/one/two")
+        val response = networking("http://thometzki.de/pp/?getPosts=true")
 
         // Serialization - Plugin also needed in build gradle
-        val obj = Json.decodeFromString<Data>(response)
-        println(obj.toString())
+        val obj = Json.decodeFromString<Array<Data>>(response)
+        println(obj[0].toString())
     }
 }
