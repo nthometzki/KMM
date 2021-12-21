@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
+import com.thkoeln.kmm_project.datastructures.Comment
 import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
@@ -14,6 +15,7 @@ import com.thkoeln.kmm_project.main
 import com.thkoeln.kmm_project.networking.Networking
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
@@ -44,24 +46,51 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             }
     }
 
-    fun create(): TweetStore =
-        object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
+    suspend fun create(): TweetStore {
+
+        lateinit var posts: Array<Networking.Data>
+        val mappedTweets = arrayListOf<Tweet>()
+
+        //mappedTweets.add(Tweet("LOL", "LOL", "LOL", "LOL", false, arrayOf<Comment>()))
+
+        val job = GlobalScope.launch {
+            posts = Networking().getPosts()
+            println("Print from store: ${posts[0]}")
+
+            // Map response to Tweet data structure
+            for (p in posts) {
+                mappedTweets.add(Tweet(p.account_id, p.username, p.timestamp, p.text, false, arrayOf<Comment>()))
+            }
+        }
+
+        job.join()
+
+        return object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "TweetStore",
-            initialState = State(),
+            initialState = State(/*mappedTweets.toTypedArray()*/),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
             val main = main()
-            lateinit var posts: Array<Networking.Data>
+
+            /*lateinit var posts: Array<Networking.Data>
 
             init {
                 GlobalScope.launch {
                     posts = Networking().getPosts()
                     println("Print from store: ${posts[0]}")
-                }
-            }
-        }
 
+                    // Map response to Tweet data structure
+                    val mappedTweets = arrayListOf<Tweet>()
+                    for (p in posts) {
+                        mappedTweets.add(Tweet(p.account_id, p.username, p.timestamp, p.text, false, arrayOf<Comment>()))
+                    }
+
+                    State(mappedTweets.toTypedArray())
+                }
+            }*/
+        }
+    }
 
     private object ReducerImpl : Reducer<State, Result> {
         fun <T> Array<T>.mapInPlace(transform: (T) -> Unit): Array<T> {

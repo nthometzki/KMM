@@ -40,6 +40,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:1.6.7")
                 implementation("io.ktor:ktor-client-cio:1.6.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1")
             }
         }
         val commonTest by getting {
