@@ -11,6 +11,9 @@ import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import com.thkoeln.kmm_project.main
+import com.thkoeln.kmm_project.networking.Networking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 internal interface TweetStore : Store<Intent, State, Nothing> {
@@ -49,6 +52,14 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             executorFactory = ::ExecutorImpl,
         ) {
             val main = main()
+            lateinit var posts: Array<Networking.Data>
+
+            init {
+                GlobalScope.launch {
+                    posts = Networking().getPosts()
+                    println("Print from store: ${posts[0]}")
+                }
+            }
         }
 
 
