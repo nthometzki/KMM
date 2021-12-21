@@ -16,7 +16,7 @@ class Networking() {
 
     suspend fun networking(url: String): String {
         println("KTOR STARTS")
-        val httpClient: HttpClient = HttpClient {
+        val httpClient = HttpClient {
             expectSuccess = false
             io.ktor.client.features.observer.ResponseObserver { response ->
                 println("HTTP status: ${response.status.value}")
@@ -27,7 +27,7 @@ class Networking() {
             url(url)
             method = HttpMethod.Get
         }
-        //println("HTML OUTPUT: ${htmlContent})")
+
         httpClient.close()
 
         return htmlContent

@@ -5,7 +5,7 @@ import com.arkivanov.mvikotlin.extensions.reaktive.bind
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.thkoeln.kmm_project.mapper.EVENT_TO_INTENT
 import com.thkoeln.kmm_project.mapper.STATE_TO_MODEL
-import com.thkoeln.kmm_project.store.TweetStoreFactory
+import com.thkoeln.kmm_project.factory.TweetFactory
 import com.thkoeln.kmm_project.view.TweetView
 import com.arkivanov.mvikotlin.extensions.reaktive.events
 import com.arkivanov.mvikotlin.extensions.reaktive.states
@@ -15,7 +15,7 @@ import com.thkoeln.kmm_project.store.TweetStore
 
 
 class TweetController() {
-    private val store = TweetStoreFactory(LoggingStoreFactory(DefaultStoreFactory)).create()
+    private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory)).create()
     private var binder: Binder? = null
 
     fun onViewCreated(view: TweetView) {
