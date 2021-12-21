@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.controller.TweetController
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class TwitterFragment() : Fragment(), View.OnClickListener {
 
