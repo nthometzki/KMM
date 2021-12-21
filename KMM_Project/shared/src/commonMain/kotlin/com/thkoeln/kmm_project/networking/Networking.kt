@@ -41,4 +41,8 @@ class Networking() {
         return obj
     }
 
+    suspend fun submitPost(googleid: String, text: String) {
+        Networking().networking("http://thometzki.de/pp/?submitPost=true&googleid=$googleid&post=$text")
+    }
+
 }
