@@ -46,12 +46,12 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
             }
     }
 
-    suspend fun create(): TweetStore {
+    fun create(): TweetStore {
 
         lateinit var posts: Array<Networking.Data>
         val mappedTweets = arrayListOf<Tweet>()
 
-        //mappedTweets.add(Tweet("LOL", "LOL", "LOL", "LOL", false, arrayOf<Comment>()))
+        mappedTweets.add(Tweet("LOL", "LOL", "LOL", "LOL", false, arrayOf<Comment>()))
 
         val job = GlobalScope.launch {
             posts = Networking().getPosts()
@@ -59,19 +59,25 @@ internal class TweetStoreFactory(private val storeFactory: StoreFactory) {
 
             // Map response to Tweet data structure
             for (p in posts) {
-                mappedTweets.add(Tweet(p.account_id, p.username, p.timestamp, p.text, false, arrayOf<Comment>()))
+                mappedTweets + Tweet(p.account_id, p.username, p.timestamp, p.text, false, arrayOf<Comment>())
             }
         }
 
-        job.join()
+        //job.join()
 
         return object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "TweetStore",
-            initialState = State(/*mappedTweets.toTypedArray()*/),
+            initialState = State(mappedTweets.toTypedArray()),
             reducer = ReducerImpl,
             executorFactory = ::ExecutorImpl,
         ) {
             val main = main()
+
+            /*init {
+                val mappedTweets = arrayListOf<Tweet>()
+                mappedTweets.add(Tweet("LOL", "LOL", "LOL", "LOL", false, arrayOf<Comment>()))
+                State(mappedTweets.toTypedArray())
+            }*/
 
             /*lateinit var posts: Array<Networking.Data>
 
