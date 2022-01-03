@@ -26,7 +26,7 @@ class TweetDatabaseImpl : TweetDatabase {
     override fun getAll(): Array<Tweet> {
         lateinit var posts: Array<Networking.Data>
         val mappedTweets = arrayOf<Tweet>()
-        val job = GlobalScope.async {
+        val job = GlobalScope.launch {
             posts = Networking().getPosts()
 
             println(">>>> POSTS: ${posts[0]}")
@@ -43,10 +43,12 @@ class TweetDatabaseImpl : TweetDatabase {
             }
         }
 
+        //job.join()
+
         // This would work - however asynchronous call...
         // val tweets = arrayOf(Tweet("TEST", "TEST", "TEST", "TEST", false, arrayOf()))
         // return tweets
-        
+
         return mappedTweets
     }
 

@@ -9,8 +9,11 @@ import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
 import com.thkoeln.kmm_project.datastructures.Comment
 import com.thkoeln.kmm_project.main
+import com.thkoeln.kmm_project.networking.Networking
 import com.thkoeln.kmm_project.store.CommentStore.Intent
 import com.thkoeln.kmm_project.store.CommentStore.State
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 internal interface CommentStore : Store<Intent, State, Nothing> {
@@ -36,7 +39,14 @@ internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
     private class ExecutorImpl : ReaktiveExecutor<Intent, Nothing, State, Result, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
-                is Intent.AddComment -> dispatch(Result.AddComment(intent.comment))
+                is Intent.AddComment -> {
+                    GlobalScope.launch {
+                        val postid = 2 // Todo: Get real Postid
+                        val loginid = "testid" // Todo: Replace with google login token
+                        Networking().submitComment(loginid, postid, intent.comment.tweetContent)
+                    }
+                    dispatch(Result.AddComment(intent.comment))
+                }
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
     }
