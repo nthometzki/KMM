@@ -34,6 +34,7 @@ class TweetDatabaseImpl : TweetDatabase {
             for (p in posts) {
                 mappedTweets + Tweet(
                     p.account_id,
+                    p.id.toInt(),
                     p.username,
                     p.timestamp,
                     p.text,

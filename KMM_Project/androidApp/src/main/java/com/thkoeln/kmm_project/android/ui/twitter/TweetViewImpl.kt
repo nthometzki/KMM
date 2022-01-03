@@ -38,6 +38,7 @@ class TweetViewImpl(root: View, private val activity: Activity) :
                 Event.TweetAdd(
                     Tweet(
                         id,
+                        3, // TODO add real post it
                         "User A.",              // TODO add real user name
                         current.format(formatter),
                         input.text.toString(),
