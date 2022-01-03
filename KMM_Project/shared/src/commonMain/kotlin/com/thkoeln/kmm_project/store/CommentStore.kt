@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 internal interface CommentStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
-        data class AddComment(val comment: Comment) : Intent()
+        data class AddComment(val comment: Comment, val postid: Int) : Intent()
         data class ToggleLiked(val id: String) : Intent()
     }
 
@@ -32,7 +32,7 @@ internal interface CommentStore : Store<Intent, State, Nothing> {
 internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
 
     sealed class Result {
-        class AddComment(val comment: Comment) : Result()
+        class AddComment(val comment: Comment, val postid: Int) : Result()
         class ToggleLiked(val id: String) : Result()
     }
 
@@ -41,11 +41,10 @@ internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
             when (intent) {
                 is Intent.AddComment -> {
                     GlobalScope.launch {
-                        val postid = 2 // Todo: Get real Postid
                         val loginid = "testid" // Todo: Replace with google login token
-                        Networking().submitComment(loginid, postid, intent.comment.tweetContent)
+                        Networking().submitComment(loginid, intent.postid, intent.comment.tweetContent)
                     }
-                    dispatch(Result.AddComment(intent.comment))
+                    dispatch(Result.AddComment(intent.comment, intent.postid))
                 }
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
