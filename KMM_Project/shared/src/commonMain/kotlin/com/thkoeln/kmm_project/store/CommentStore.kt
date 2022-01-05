@@ -10,6 +10,7 @@ import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
 import com.thkoeln.kmm_project.datastructures.Comment
 import com.thkoeln.kmm_project.main
 import com.thkoeln.kmm_project.networking.Networking
+import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.store.CommentStore.Intent
 import com.thkoeln.kmm_project.store.CommentStore.State
 import kotlinx.coroutines.GlobalScope
@@ -40,10 +41,7 @@ internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddComment -> {
-                    GlobalScope.launch {
-                        val loginid = "testid" // Todo: Replace with google login token
-                        Networking().submitComment(loginid, intent.postid, intent.comment.tweetContent)
-                    }
+                    TweetDatabaseImpl().postComment("testid", intent.postid, intent.comment.tweetContent)  // Todo("change googleid")
                     dispatch(Result.AddComment(intent.comment, intent.postid))
                 }
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))

@@ -7,9 +7,8 @@ import com.thkoeln.kmm_project.store.TweetStore.State
 import com.arkivanov.mvikotlin.core.store.*
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.networking.Networking
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.thkoeln.kmm_project.networking.database.TweetDatabase
+import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 
 
 abstract class AbstractTweetFactory(
@@ -50,10 +49,7 @@ abstract class AbstractTweetFactory(
         override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> {
-                    GlobalScope.launch {
-                        val loginid = "testid" // Todo: Replace with google login token
-                        Networking().submitPost(loginid, result.tweet.tweetContent)
-                    }
+                    TweetDatabaseImpl().postTweet("testid", result.tweet.tweetContent) // Todo("change googleid")
                     copy(value = value + result.tweet)
                 }
                 is Result.ToggleLiked -> copy(value = value.mapInPlace {

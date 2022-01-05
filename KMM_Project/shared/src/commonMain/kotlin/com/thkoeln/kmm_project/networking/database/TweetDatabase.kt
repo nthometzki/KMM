@@ -16,7 +16,7 @@ interface TweetDatabase {
 
     fun postTweet(googleId: String, post: String)
     fun postLike(googleId: String, postId: String)
-    fun postComment(googleId: String, postId: String, comment: String)
+    fun postComment(googleId: String, postId: Int, comment: String)
 
 }
 
@@ -66,14 +66,18 @@ class TweetDatabaseImpl : TweetDatabase {
     }
 
     override fun postTweet(googleId: String, post: String) {
-        TODO("Not yet implemented")
+        GlobalScope.launch {
+            Networking().submitPost(googleId, post)
+        }
     }
 
     override fun postLike(googleId: String, postId: String) {
         TODO("Not yet implemented")
     }
 
-    override fun postComment(googleId: String, postId: String, comment: String) {
-        TODO("Not yet implemented")
+    override fun postComment(googleId: String, postId: Int, comment: String) {
+        GlobalScope.launch {
+            Networking().submitComment(googleId, postId, comment)
+        }
     }
 }
