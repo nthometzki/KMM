@@ -48,7 +48,7 @@ class CommentViewImpl(
                         current.format(formatter),
                         editText.text.toString(),
                     ),
-                    3 //Todo: get postid from a post and place it here
+                    tweetId
                 )
             )
             editText.text = null

@@ -48,15 +48,15 @@ class Networking() {
         Networking().networking("http://thometzki.de/pp/?submitPost=true&googleid=$googleid&post=$text")
     }
 
-    suspend fun submitComment(googleid: String, postid: Int, text: String) {
+    suspend fun submitComment(googleid: String, postid: String, text: String) {
         Networking().networking("http://thometzki.de/pp/?submitComment=true&googleid=$googleid&postid=$postid&comment=$text")
     }
 
-    suspend fun postLike(googleid: String, postid: Int) {
+    suspend fun postLike(googleid: String, postid: String) {
         Networking().networking("http://thometzki.de/pp/?submitLike=true&googleid=$googleid&postid=$postid")
     }
 
-    suspend fun getTweet(postid: Int): Data {
+    suspend fun getTweet(postid: String): Data {
         val response = Networking().networking("http://thometzki.de/pp/?getSinglePost=true&postid=$postid")
 
         // Serialization - Plugin also needed in build gradle
@@ -64,7 +64,7 @@ class Networking() {
         return obj[0]
     }
 
-    suspend fun getLikes(postid: Int): Int {
+    suspend fun getLikes(postid: String): Int {
         val response = Networking().networking("http://thometzki.de/pp/?getLikes=true&postid=$postid")
 
         // Serialization - Plugin also needed in build gradle
@@ -72,7 +72,7 @@ class Networking() {
         return obj.size
     }
 
-    suspend fun getComments(postid: Int) : Array<Comment> {
+    suspend fun getComments(postid: String) : Array<Comment> {
         val response = Networking().networking("http://thometzki.de/pp/?getComments=true&postid=$postid")
 
         // Serialization - Plugin also needed in build gradle

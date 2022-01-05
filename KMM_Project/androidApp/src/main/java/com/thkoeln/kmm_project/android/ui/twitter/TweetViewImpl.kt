@@ -38,20 +38,20 @@ class TweetViewImpl(root: View, private val activity: Activity) :
                 Event.TweetAdd(
                     Tweet(
                         id,
-                        3, // TODO add real post it (return when added, or count posts and increment)
+                        "3", // TODO add real post it (return when added, or count posts and increment)
                         "User A.",              // TODO add real user name
                         current.format(formatter),
                         input.text.toString(),
                         false,
                         arrayOf(
-                            Comment(
+                            /*Comment(
                                 id,
                                 UUID.randomUUID().toString(),
                                 "User B",
                                 current.format(formatter),
-                                "LMAO",
+                                "Text",
                                 false
-                            )
+                            )*/
                         )
                     )
                 )

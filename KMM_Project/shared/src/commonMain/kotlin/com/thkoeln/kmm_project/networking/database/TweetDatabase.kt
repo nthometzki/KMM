@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 
 interface TweetDatabase {
     fun getAll(): Array<Tweet>
-    suspend fun getTweet(postId: Int): Tweet
-    suspend fun getLikes(postId: Int): Int
-    suspend fun getComments(postId: Int): Array<Comment>
+    suspend fun getTweet(postId: String): Tweet
+    suspend fun getLikes(postId: String): Int
+    suspend fun getComments(postId: String): Array<Comment>
 
     fun postTweet(googleId: String, post: String)
-    fun postLike(googleId: String, postId: Int)
-    fun postComment(googleId: String, postId: Int, comment: String)
+    fun postLike(googleId: String, postId: String)
+    fun postComment(googleId: String, postId: String, comment: String)
 
 }
 
@@ -34,7 +34,7 @@ class TweetDatabaseImpl : TweetDatabase {
             for (p in posts) {
                 mappedTweets + Tweet(
                     p.account_id,
-                    p.id.toInt(),
+                    p.id,
                     p.username,
                     p.timestamp,
                     p.text,
@@ -53,15 +53,15 @@ class TweetDatabaseImpl : TweetDatabase {
         return mappedTweets
     }
 
-    override suspend fun getTweet(postId: Int): Tweet {
-        var mappedTweet = Tweet("", 0, "", "", "", false, arrayOf())
+    override suspend fun getTweet(postId: String): Tweet {
+        var mappedTweet = Tweet("", "0", "", "", "", false, arrayOf())
 
         val job = GlobalScope.launch {
             val post = Networking().getTweet(postId)
 
             mappedTweet = Tweet(
                 post.account_id,
-                post.id.toInt(),
+                post.id,
                 post.username,
                 post.timestamp,
                 post.text,
@@ -75,7 +75,7 @@ class TweetDatabaseImpl : TweetDatabase {
         return mappedTweet
     }
 
-    override suspend fun getLikes(postId: Int): Int {
+    override suspend fun getLikes(postId: String): Int {
         var likes = 0
         val job = GlobalScope.launch {
             likes = Networking().getLikes(postId)
@@ -85,7 +85,7 @@ class TweetDatabaseImpl : TweetDatabase {
         return likes
     }
 
-    override suspend fun getComments(postId: Int): Array<Comment> {
+    override suspend fun getComments(postId: String): Array<Comment> {
         lateinit var comments: Array<Networking.Comment>
         val mappedComments = arrayOf<Comment>()
         val job = GlobalScope.launch {
@@ -116,13 +116,13 @@ class TweetDatabaseImpl : TweetDatabase {
         }
     }
 
-    override fun postLike(googleId: String, postId: Int) {
+    override fun postLike(googleId: String, postId: String) {
         GlobalScope.launch {
             Networking().postLike(googleId, postId)
         }
     }
 
-    override fun postComment(googleId: String, postId: Int, comment: String) {
+    override fun postComment(googleId: String, postId: String, comment: String) {
         GlobalScope.launch {
             Networking().submitComment(googleId, postId, comment)
         }

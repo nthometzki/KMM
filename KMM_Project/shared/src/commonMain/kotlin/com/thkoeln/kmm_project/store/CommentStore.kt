@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 internal interface CommentStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
-        data class AddComment(val comment: Comment, val postid: Int) : Intent()
+        data class AddComment(val comment: Comment, val postid: String) : Intent()
         data class ToggleLiked(val id: String) : Intent()
     }
 
@@ -33,7 +33,7 @@ internal interface CommentStore : Store<Intent, State, Nothing> {
 internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
 
     sealed class Result {
-        class AddComment(val comment: Comment, val postid: Int) : Result()
+        class AddComment(val comment: Comment, val postid: String) : Result()
         class ToggleLiked(val id: String) : Result()
     }
 
