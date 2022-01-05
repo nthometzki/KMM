@@ -1,5 +1,6 @@
 package com.thkoeln.kmm_project.networking
 
+import com.thkoeln.kmm_project.datastructures.Tweet
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -13,6 +14,8 @@ class Networking() {
 
     @Serializable
     data class Data(val id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
+    data class Likes(val id: String, val account_id: String, val post_id: String)
+    data class Comment(val id: String, val post_id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
 
     suspend fun networking(url: String): String {
         println("KTOR STARTS")
@@ -47,6 +50,34 @@ class Networking() {
 
     suspend fun submitComment(googleid: String, postid: Int, text: String) {
         Networking().networking("http://thometzki.de/pp/?submitComment=true&googleid=$googleid&postid=$postid&comment=$text")
+    }
+
+    suspend fun postLike(googleid: String, postid: Int) {
+        Networking().networking("http://thometzki.de/pp/?submitLike=true&googleid=$googleid&postid=$postid")
+    }
+
+    suspend fun getTweet(postid: Int): Data {
+        val response = Networking().networking("http://thometzki.de/pp/?getSinglePost=true&postid=$postid")
+
+        // Serialization - Plugin also needed in build gradle
+        val obj = Json.decodeFromString<Array<Data>>(response)
+        return obj[0]
+    }
+
+    suspend fun getLikes(postid: Int): Int {
+        val response = Networking().networking("http://thometzki.de/pp/?getLikes=true&postid=$postid")
+
+        // Serialization - Plugin also needed in build gradle
+        val obj = Json.decodeFromString<Array<Likes>>(response)
+        return obj.size
+    }
+
+    suspend fun getComments(postid: Int) : Array<Comment> {
+        val response = Networking().networking("http://thometzki.de/pp/?getComments=true&postid=$postid")
+
+        // Serialization - Plugin also needed in build gradle
+        val obj = Json.decodeFromString<Array<Comment>>(response)
+        return obj
     }
 
 }
