@@ -41,7 +41,7 @@ internal class CommentStoreFactory(private val storeFactory: StoreFactory) {
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddComment -> {
-                    TweetDatabaseImpl().postComment("testid", intent.postid, intent.comment.tweetContent)  // Todo("change googleid")
+                    //TweetDatabaseImpl().postComment("testid", intent.postid, intent.comment.tweetContent)  // Todo("change googleid")
                     dispatch(Result.AddComment(intent.comment, intent.postid))
                 }
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))

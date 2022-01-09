@@ -14,9 +14,9 @@ interface TweetDatabase {
     suspend fun getLikes(postId: String): Int
     suspend fun getComments(postId: String): Array<Comment>
 
-    fun postTweet(googleId: String, post: String, id: String)
-    fun postLike(googleId: String, postId: String, liked: Boolean)
-    fun postComment(googleId: String, postId: String, comment: String)
+    suspend fun postTweet(googleId: String, post: String, id: String)
+    suspend fun postLike(googleId: String, postId: String, liked: Boolean)
+    suspend fun postComment(googleId: String, postId: String, comment: String)
 
 }
 
@@ -106,21 +106,24 @@ class TweetDatabaseImpl : TweetDatabase {
         return mappedComments
     }
 
-    override fun postTweet(googleId: String, post: String, id: String) {
-        GlobalScope.launch {
+    override suspend fun postTweet(googleId: String, post: String, id: String) {
+        val job = GlobalScope.launch {
             Networking().submitPost(googleId, post, id)
         }
+        job.join()
     }
 
-    override fun postLike(googleId: String, postId: String, liked: Boolean) {
-        GlobalScope.launch {
+    override suspend fun postLike(googleId: String, postId: String, liked: Boolean) {
+        val job = GlobalScope.launch {
             Networking().postLike(googleId, postId, liked)
         }
+        job.join()
     }
 
-    override fun postComment(googleId: String, postId: String, comment: String) {
-        GlobalScope.launch {
+    override suspend fun postComment(googleId: String, postId: String, comment: String) {
+        val job = GlobalScope.launch {
             Networking().submitComment(googleId, postId, comment)
         }
+        job.join()
     }
 }

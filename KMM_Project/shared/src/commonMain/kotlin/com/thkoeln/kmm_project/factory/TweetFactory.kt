@@ -30,6 +30,9 @@ class TweetFactory(
     private val mainContext: CoroutineContext,
     private val ioContext: CoroutineContext
 ) : AbstractTweetFactory(storeFactory = storeFactory) {
+
+    private val database = TweetDatabaseImpl()
+
     override fun createExecutor(): Executor<Intent, Action, State, Result, Nothing> = ExecutorImpl()
 
     override fun createBootstrapper(): CoroutineBootstrapper<Action> = BootstrapperImpl()
@@ -62,14 +65,22 @@ class TweetFactory(
 
         fun addTweet(tweet: Tweet) {
             scope.launch {
-                TweetDatabaseImpl().postTweet(tweet.userName, tweet.tweetContent, tweet.id)
+                database.postTweet(tweet.userName, tweet.tweetContent, tweet.id)
             }
             dispatch(Result.TweetAdd(tweet))
+            getAllTweets()
         }
 
         fun toggleLiked(id: String) {
             scope.launch {
                 //TweetDatabaseImpl().postLike()
+            }
+        }
+
+        fun getAllTweets() {
+            scope.launch {
+                val tweets = database.getAll()
+                dispatch(Result.AddAllTweets(tweets))
             }
         }
     }
