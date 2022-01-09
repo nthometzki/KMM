@@ -13,8 +13,10 @@ import com.badoo.reaktive.single.observeOn
 import com.badoo.reaktive.single.singleFromFunction
 import com.badoo.reaktive.single.subscribeOn
 import com.thkoeln.kmm_project.datastructures.Tweet
+import com.thkoeln.kmm_project.networking.Networking
 import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.store.TweetStore.*
+import com.thkoeln.kmm_project.view.TweetView
 import kotlinx.coroutines.*
 
 
@@ -25,16 +27,36 @@ class TweetFactory(storeFactory: StoreFactory) : AbstractTweetFactory(storeFacto
 
     private inner class BootstrapperImpl : ReaktiveBootstrapper<Action>() {
         override fun invoke() {
-            singleFromFunction {
-
+            /*singleFromFunction {
                 TweetDatabaseImpl().getAll()
-
-
             }
                 .subscribeOn(ioScheduler)
                 .map { it.let(Action::AddAll) }
                 .observeOn(mainScheduler)
-                .subscribeScoped(isThreadLocal = true, onSuccess = ::dispatch)
+                .subscribeScoped(isThreadLocal = true, onSuccess = ::dispatch)*/
+
+            // Test
+            lateinit var posts: Array<Networking.Data>
+            val mappedTweets = arrayOf<Tweet>()
+            val job = GlobalScope.launch {
+                posts = Networking().getPosts()
+
+                println(">>>> POSTS: ${posts[0]}")
+
+                for (p in posts) {
+                    mappedTweets + Tweet(
+                        p.account_id,
+                        p.id,
+                        p.username,
+                        p.timestamp,
+                        p.text,
+                        false,
+                        arrayOf()
+                    )
+                }
+
+                // Add All Tweets here inside of the coroutine
+            }
         }
     }
 

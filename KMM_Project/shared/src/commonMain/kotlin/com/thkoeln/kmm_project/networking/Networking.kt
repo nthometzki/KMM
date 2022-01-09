@@ -44,8 +44,8 @@ class Networking() {
         return obj
     }
 
-    suspend fun submitPost(googleid: String, text: String) {
-        Networking().networking("http://thometzki.de/pp/?submitPost=true&googleid=$googleid&post=$text")
+    suspend fun submitPost(googleid: String, text: String, id: String) {
+        Networking().networking("http://thometzki.de/pp/?submitPost=true&googleid=$googleid&post=$text&id=$id")
     }
 
     suspend fun submitComment(googleid: String, postid: String, text: String) {

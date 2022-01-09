@@ -49,7 +49,7 @@ abstract class AbstractTweetFactory(
         override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> {
-                    TweetDatabaseImpl().postTweet("testid", result.tweet.tweetContent) // Todo("change googleid")
+                    TweetDatabaseImpl().postTweet("testid", result.tweet.tweetContent, result.tweet.id) // Todo("change googleid")
                     copy(value = value + result.tweet)
                 }
                 is Result.ToggleLiked -> copy(value = value.mapInPlace {

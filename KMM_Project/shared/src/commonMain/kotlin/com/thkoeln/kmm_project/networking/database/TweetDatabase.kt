@@ -14,7 +14,7 @@ interface TweetDatabase {
     suspend fun getLikes(postId: String): Int
     suspend fun getComments(postId: String): Array<Comment>
 
-    fun postTweet(googleId: String, post: String)
+    fun postTweet(googleId: String, post: String, id: String)
     fun postLike(googleId: String, postId: String)
     fun postComment(googleId: String, postId: String, comment: String)
 
@@ -110,9 +110,9 @@ class TweetDatabaseImpl : TweetDatabase {
         return mappedComments
     }
 
-    override fun postTweet(googleId: String, post: String) {
+    override fun postTweet(googleId: String, post: String, id: String) {
         GlobalScope.launch {
-            Networking().submitPost(googleId, post)
+            Networking().submitPost(googleId, post, id)
         }
     }
 
