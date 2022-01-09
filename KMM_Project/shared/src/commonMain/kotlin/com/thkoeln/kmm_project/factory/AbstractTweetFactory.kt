@@ -15,10 +15,10 @@ import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 abstract class AbstractTweetFactory(
     private val storeFactory: StoreFactory
 ) {
-    fun create(): TweetStore =
+    fun create(userName: String): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "TodoAddStore",
-            initialState = State(),
+            initialState = State(arrayOf(),userName),
             bootstrapper = createBootstrapper(),
             executorFactory = ::createExecutor,
             reducer = ReducerImpl
@@ -50,7 +50,6 @@ abstract class AbstractTweetFactory(
         override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> {
-                    TweetDatabaseImpl().postTweet("testid", result.tweet.tweetContent, result.tweet.id) // Todo("change googleid")
                     copy(value = value + result.tweet)
                 }
                 is Result.ToggleLiked -> copy(value = value.mapInPlace {

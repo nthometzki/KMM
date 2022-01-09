@@ -20,5 +20,6 @@ interface TweetStore : Store<Intent, State, Nothing> {
     @Parcelize
     data class State(
         val value: Array<Tweet> = arrayOf(),
+        val username: String
     ) : Parcelable
 }

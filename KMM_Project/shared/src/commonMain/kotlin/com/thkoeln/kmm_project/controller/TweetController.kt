@@ -17,9 +17,10 @@ import kotlin.coroutines.CoroutineContext
 
 class TweetController(
     private val mainContext: CoroutineContext,
-    private val ioContext: CoroutineContext
+    private val ioContext: CoroutineContext,
+    private val userName: String
 ) {
-    private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext).create()
+    private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext).create(userName)
     private var binder: Binder? = null
 
     fun onViewCreated(view: TweetView) {

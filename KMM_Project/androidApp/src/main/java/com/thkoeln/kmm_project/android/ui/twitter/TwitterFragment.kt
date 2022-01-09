@@ -21,7 +21,7 @@ class TwitterFragment() : Fragment(), View.OnClickListener {
     lateinit var controller: TweetController
 
     private fun createController(): TweetController =
-        TweetController(Dispatchers.Main.immediate, Dispatchers.IO)
+        TweetController(Dispatchers.Main.immediate, Dispatchers.IO, "TestUser")
 
     override fun onCreateView(
         inflater: LayoutInflater,

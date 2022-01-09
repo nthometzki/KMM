@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 class Networking() {
 
     @Serializable
-    data class Data(val id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
+    data class Data(val id: String, val text: String, val account_id: String, val timestamp: String)
     data class Likes(val id: String, val account_id: String, val post_id: String)
     data class Comment(val id: String, val post_id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
 
@@ -52,7 +52,7 @@ class Networking() {
         Networking().networking("http://thometzki.de/pp/?submitComment=true&googleid=$googleid&postid=$postid&comment=$text")
     }
 
-    suspend fun postLike(googleid: String, postid: String) {
+    suspend fun postLike(googleid: String, postid: String, liked: Boolean) {
         Networking().networking("http://thometzki.de/pp/?submitLike=true&googleid=$googleid&postid=$postid")
     }
 

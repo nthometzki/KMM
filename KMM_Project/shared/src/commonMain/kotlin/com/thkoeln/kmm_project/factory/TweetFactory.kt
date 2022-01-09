@@ -32,12 +32,13 @@ class TweetFactory(
 ) : AbstractTweetFactory(storeFactory = storeFactory) {
     override fun createExecutor(): Executor<Intent, Action, State, Result, Nothing> = ExecutorImpl()
 
-    override fun createBootstrapper(): Bootstrapper<Action> = BootstrapperImpl()
+    override fun createBootstrapper(): CoroutineBootstrapper<Action> = BootstrapperImpl()
 
     private inner class BootstrapperImpl : CoroutineBootstrapper<Action>() {
         override fun invoke() {
             scope.launch {
                 val tweets = withContext(ioContext) {TweetDatabaseImpl().getAll()}
+                println(tweets[0].tweetContent)
                 dispatch(Action.AddAll(tweets))
             }
         }
@@ -48,16 +49,27 @@ class TweetFactory(
 
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
-                is Intent.AddTweet -> dispatch(Result.TweetAdd(intent.tweet))
+                is Intent.AddTweet -> addTweet(intent.tweet)
                 is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
                 is Intent.AddAllTweets -> dispatch(Result.AddAllTweets(intent.tweets))
             }
 
-
-        @DelicateCoroutinesApi
         override fun executeAction(action: Action, getState: () -> State) {
             when (action) {
                 is Action.AddAll -> dispatch(Result.AddAllTweets(action.tweets))
+            }
+        }
+
+        fun addTweet(tweet: Tweet) {
+            scope.launch {
+                TweetDatabaseImpl().postTweet(tweet.userName, tweet.tweetContent, tweet.id)
+            }
+            dispatch(Result.TweetAdd(tweet))
+        }
+
+        fun toggleLiked(id: String) {
+            scope.launch {
+                //TweetDatabaseImpl().postLike()
             }
         }
     }

@@ -15,7 +15,7 @@ interface TweetDatabase {
     suspend fun getComments(postId: String): Array<Comment>
 
     fun postTweet(googleId: String, post: String, id: String)
-    fun postLike(googleId: String, postId: String)
+    fun postLike(googleId: String, postId: String, liked: Boolean)
     fun postComment(googleId: String, postId: String, comment: String)
 
 }
@@ -25,31 +25,29 @@ class TweetDatabaseImpl : TweetDatabase {
     @DelicateCoroutinesApi
     override suspend fun getAll(): Array<Tweet> {
         lateinit var posts: Array<Networking.Data>
-        val mappedTweets = arrayOf<Tweet>()
+        val mappedTweets = arrayListOf<Tweet>()
         val job = GlobalScope.launch {
             posts = Networking().getPosts()
 
-            println(">>>> POSTS: ${posts[0]}")
-
             for (p in posts) {
-                mappedTweets + Tweet(
-                    p.id,
-                    p.username,
-                    p.timestamp,
-                    p.text,
-                    false,
-                    arrayOf()
+                mappedTweets.add(
+                    Tweet(
+                        p.id,
+                        p.account_id,
+                        p.timestamp,
+                        p.text,
+                        false,
+                        arrayOf()
+                    )
                 )
             }
         }
 
         job.join()
 
-        // This would work - however asynchronous call...
-        // val tweets = arrayOf(Tweet("TEST", "TEST", "TEST", "TEST", false, arrayOf()))
-        // return tweets
+        println(mappedTweets[0].tweetContent)
 
-        return mappedTweets
+        return mappedTweets.toTypedArray()
     }
 
     override suspend fun getTweet(postId: String): Tweet {
@@ -60,7 +58,7 @@ class TweetDatabaseImpl : TweetDatabase {
 
             mappedTweet = Tweet(
                 post.id,
-                post.username,
+                post.account_id,
                 post.timestamp,
                 post.text,
                 false,
@@ -114,9 +112,9 @@ class TweetDatabaseImpl : TweetDatabase {
         }
     }
 
-    override fun postLike(googleId: String, postId: String) {
+    override fun postLike(googleId: String, postId: String, liked: Boolean) {
         GlobalScope.launch {
-            Networking().postLike(googleId, postId)
+            Networking().postLike(googleId, postId, liked)
         }
     }
 
