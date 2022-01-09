@@ -6,7 +6,6 @@ import com.arkivanov.essenty.parcelable.Parcelize
 @Parcelize
 data class Tweet(
     var id: String,
-    var postid: String,
     var userName: String,
     var tweetDate: String,
     var tweetContent: String,

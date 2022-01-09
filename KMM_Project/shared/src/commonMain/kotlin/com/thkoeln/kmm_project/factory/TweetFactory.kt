@@ -45,7 +45,6 @@ class TweetFactory(storeFactory: StoreFactory) : AbstractTweetFactory(storeFacto
 
                 for (p in posts) {
                     mappedTweets + Tweet(
-                        p.account_id,
                         p.id,
                         p.username,
                         p.timestamp,

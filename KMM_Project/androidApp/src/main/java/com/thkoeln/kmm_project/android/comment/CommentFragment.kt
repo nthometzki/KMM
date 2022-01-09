@@ -48,7 +48,7 @@ class CommentFragment() : Fragment() {
             numberOfComments.text = "${tweetData.comments.size} Comments"
 
             controller = CommentController(tweetData.comments)
-            activity?.let { CommentViewImpl(root, it, tweetData.postid) }
+            activity?.let { CommentViewImpl(root, it, tweetData.id) }
                 ?.let { controller.onViewCreated(it) }
         }
 

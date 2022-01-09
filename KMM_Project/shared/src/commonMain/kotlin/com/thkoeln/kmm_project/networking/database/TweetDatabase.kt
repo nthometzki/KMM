@@ -33,7 +33,6 @@ class TweetDatabaseImpl : TweetDatabase {
 
             for (p in posts) {
                 mappedTweets + Tweet(
-                    p.account_id,
                     p.id,
                     p.username,
                     p.timestamp,
@@ -54,13 +53,12 @@ class TweetDatabaseImpl : TweetDatabase {
     }
 
     override suspend fun getTweet(postId: String): Tweet {
-        var mappedTweet = Tweet("", "0", "", "", "", false, arrayOf())
+        var mappedTweet = Tweet("", "", "", "", false, arrayOf())
 
         val job = GlobalScope.launch {
             val post = Networking().getTweet(postId)
 
             mappedTweet = Tweet(
-                post.account_id,
                 post.id,
                 post.username,
                 post.timestamp,
