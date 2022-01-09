@@ -9,7 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 interface TweetDatabase {
-    fun getAll(): Array<Tweet>
+    suspend fun getAll(): Array<Tweet>
     suspend fun getTweet(postId: String): Tweet
     suspend fun getLikes(postId: String): Int
     suspend fun getComments(postId: String): Array<Comment>
@@ -23,7 +23,7 @@ interface TweetDatabase {
 class TweetDatabaseImpl : TweetDatabase {
 
     @DelicateCoroutinesApi
-    override fun getAll(): Array<Tweet> {
+    override suspend fun getAll(): Array<Tweet> {
         lateinit var posts: Array<Networking.Data>
         val mappedTweets = arrayOf<Tweet>()
         val job = GlobalScope.launch {
@@ -43,11 +43,7 @@ class TweetDatabaseImpl : TweetDatabase {
             }
         }
 
-        //job.join()
-
-        // This would work - however asynchronous call...
-        // val tweets = arrayOf(Tweet("TEST", "TEST", "TEST", "TEST", false, arrayOf()))
-        // return tweets
+        job.join()
 
         return mappedTweets
     }
