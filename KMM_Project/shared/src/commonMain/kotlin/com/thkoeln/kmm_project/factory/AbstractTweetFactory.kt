@@ -6,6 +6,7 @@ import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import com.arkivanov.mvikotlin.core.store.*
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
+import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.networking.database.TweetDatabase
 import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
@@ -26,7 +27,7 @@ abstract class AbstractTweetFactory(
 
     protected abstract fun createExecutor(): Executor<Intent, Action, State, Result, Nothing>
 
-    protected abstract fun createBootstrapper(): Bootstrapper<Action>
+    protected abstract fun createBootstrapper(): CoroutineBootstrapper<Action>
 
     protected sealed class Result : JvmSerializable {
         class TweetAdd(val tweet: Tweet) : Result()

@@ -45,20 +45,7 @@
         android:layout_marginEnd="20dp"
         android:textColor="@android:color/black"
         android:text="Dummy Text"
-        android:textSize="15sp" />
-
-    <Button
-        android:id="@+id/comment_list_tweet_like_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/comment_list_tweet_content"
-        android:layout_marginStart="50dp"
-        android:background="@android:color/transparent"
-        android:text="@string/like"
-        android:textAllCaps="false"
-        android:textColor="@android:color/darker_gray"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"/>
+        android:textSize="15sp"
+        android:layout_marginBottom="24dp"/>
 
 </RelativeLayout>

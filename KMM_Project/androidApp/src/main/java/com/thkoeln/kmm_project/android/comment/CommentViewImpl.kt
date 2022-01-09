@@ -61,11 +61,7 @@ class CommentViewImpl(
 
     override fun render(model: Model) {
         super.render(model)
-        val adapter = CommentListAdapter(activity, model.comments, object : Listener {
-            override fun onItemLiked(id: String) {
-                dispatch(Event.ToggleLiked(id))
-            }
-        })
+        val adapter = CommentListAdapter(activity, model.comments)
 
         listView.adapter = adapter
     }
