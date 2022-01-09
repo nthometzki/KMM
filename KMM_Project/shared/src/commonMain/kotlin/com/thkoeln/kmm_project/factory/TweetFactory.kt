@@ -3,8 +3,12 @@ package com.thkoeln.kmm_project.factory
 import com.arkivanov.mvikotlin.core.store.Bootstrapper
 import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
+import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.arkivanov.mvikotlin.extensions.coroutines.SuspendBootstrapper
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveBootstrapper
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
+import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.scheduler.mainScheduler
 import com.badoo.reaktive.scheduler.newThreadScheduler
@@ -18,49 +22,29 @@ import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.store.TweetStore.*
 import com.thkoeln.kmm_project.view.TweetView
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
-class TweetFactory(storeFactory: StoreFactory) : AbstractTweetFactory(storeFactory = storeFactory) {
+class TweetFactory(
+    storeFactory: StoreFactory,
+    private val mainContext: CoroutineContext,
+    private val ioContext: CoroutineContext
+) : AbstractTweetFactory(storeFactory = storeFactory) {
     override fun createExecutor(): Executor<Intent, Action, State, Result, Nothing> = ExecutorImpl()
 
     override fun createBootstrapper(): Bootstrapper<Action> = BootstrapperImpl()
 
-    private inner class BootstrapperImpl : ReaktiveBootstrapper<Action>() {
+    private inner class BootstrapperImpl : CoroutineBootstrapper<Action>() {
         override fun invoke() {
-            /*singleFromFunction {
-                TweetDatabaseImpl().getAll()
-            }
-                .subscribeOn(ioScheduler)
-                .map { it.let(Action::AddAll) }
-                .observeOn(mainScheduler)
-                .subscribeScoped(isThreadLocal = true, onSuccess = ::dispatch)*/
-
-            // Test
-            lateinit var posts: Array<Networking.Data>
-            val mappedTweets = arrayOf<Tweet>()
-            val job = GlobalScope.launch {
-                posts = Networking().getPosts()
-
-                println(">>>> POSTS: ${posts[0]}")
-
-                for (p in posts) {
-                    mappedTweets + Tweet(
-                        p.id,
-                        p.username,
-                        p.timestamp,
-                        p.text,
-                        false,
-                        arrayOf()
-                    )
-                }
-
-                // Add All Tweets here inside of the coroutine
+            scope.launch {
+                val tweets = withContext(ioContext) {TweetDatabaseImpl().getAll()}
+                dispatch(Action.AddAll(tweets))
             }
         }
     }
 
 
-    private inner class ExecutorImpl : ReaktiveExecutor<Intent, Action, State, Result, Nothing>() {
+    private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Result, Nothing>(mainContext) {
 
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {

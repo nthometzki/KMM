@@ -26,13 +26,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.arkivanov.mvikotlin:mvikotlin:2.0.4")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-main:2.0.4")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-logging:2.0.4")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-timetravel:2.0.4")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:2.0.4")
-                implementation("com.arkivanov.mvikotlin:rx:2.0.4")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.4")
+                implementation("com.arkivanov.mvikotlin:mvikotlin:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-main:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-logging:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-timetravel:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:rx:3.0.0-alpha02")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:3.0.0-alpha02")
                 implementation("com.badoo.reaktive:reaktive:1.2.1")
                 implementation("com.arkivanov.essenty:lifecycle:0.2.2")
                 implementation("com.arkivanov.essenty:state-keeper:0.2.2")
@@ -40,7 +40,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:1.6.7")
                 implementation("io.ktor:ktor-client-cio:1.6.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1")
             }
         }
         val commonTest by getting {
