@@ -62,6 +62,9 @@ class TweetViewImpl(root: View, private val activity: Activity) :
             loadingSpinner.visibility = View.VISIBLE
         } else {
             loadingSpinner.visibility = View.INVISIBLE
+
+            model.tweets.sortByDescending { it.tweetDate }
+
             val adapter = TweetListAdapter(activity, model.tweets, object : TweetListener {
                 override fun onItemLiked(id: String) {
                     dispatch(Event.ToggleLiked(id))

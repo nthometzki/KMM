@@ -43,9 +43,7 @@ class CommentFragment() : Fragment() {
             // TODO fetch number of likes after backend change
             numberOfLikes.text = "0 Likes"
 
-            // TODO add to render method of viewimpl
-            val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
-            numberOfComments.text = "${tweetData.comments.size} Comments"
+
 
             controller = CommentController(tweetData.comments)
             activity?.let { CommentViewImpl(root, it, tweetData.id) }
