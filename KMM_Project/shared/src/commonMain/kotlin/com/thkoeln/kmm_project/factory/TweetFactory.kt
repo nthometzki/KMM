@@ -66,9 +66,9 @@ class TweetFactory(
         fun addTweet(tweet: Tweet) {
             scope.launch {
                 database.postTweet(tweet.userName, tweet.tweetContent, tweet.id)
+                dispatch(Result.TweetAdd(tweet))
+                getAllTweets()
             }
-            dispatch(Result.TweetAdd(tweet))
-            getAllTweets()
         }
 
         fun toggleLiked(id: String) {
