@@ -23,6 +23,7 @@ import java.util.*
 class TweetViewImpl(root: View, private val activity: Activity) :
     BaseMviView<Model, Event>(), TweetView {
     private var listView: ListView = root.findViewById(R.id.tweet_list_view)
+    private var loadingSpinner = root.findViewById<ProgressBar>(R.id.progress_loader)
 
 
     init {
@@ -42,16 +43,7 @@ class TweetViewImpl(root: View, private val activity: Activity) :
                         current.format(formatter),
                         input.text.toString(),
                         false,
-                        arrayOf(
-                            /*Comment(
-                                id,
-                                UUID.randomUUID().toString(),
-                                "User B",
-                                current.format(formatter),
-                                "Text",
-                                false
-                            )*/
-                        )
+                        arrayOf()
                     )
                 )
             )
@@ -66,13 +58,21 @@ class TweetViewImpl(root: View, private val activity: Activity) :
 
     override fun render(model: Model) {
         super.render(model)
-        println(">>> MODEL $model")
-        val adapter = TweetListAdapter(activity, model.tweets, object : TweetListener {
-            override fun onItemLiked(id: String) {
-                dispatch(Event.ToggleLiked(id))
-            }
-        })
+        if (model.tweets.isEmpty()) {
+            loadingSpinner.visibility = View.VISIBLE
+        } else {
+            loadingSpinner.visibility = View.INVISIBLE
 
-        listView.adapter = adapter
+            model.tweets.sortByDescending { it.tweetDate }
+
+            val adapter = TweetListAdapter(activity, model.tweets, object : TweetListener {
+                override fun onItemLiked(id: String) {
+                    dispatch(Event.ToggleLiked(id))
+                }
+            })
+
+            listView.adapter = adapter
+        }
+
     }
 }

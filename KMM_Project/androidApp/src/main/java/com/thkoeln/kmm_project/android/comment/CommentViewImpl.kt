@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import com.thkoeln.kmm_project.view.CommentView.Event
 import com.thkoeln.kmm_project.view.CommentView.Model
 import com.arkivanov.mvikotlin.core.view.BaseMviView;
@@ -24,6 +25,8 @@ class CommentViewImpl(
     val tweetId: String
 ) : BaseMviView<Model, Event>(), CommentView {
     private var listView: ListView = root.findViewById(R.id.comment_list_view)
+    private val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
+
 
     fun EditText.onSubmit(func: () -> Unit) {
         setOnEditorActionListener { _, actionId, _ ->
@@ -62,7 +65,7 @@ class CommentViewImpl(
     override fun render(model: Model) {
         super.render(model)
         val adapter = CommentListAdapter(activity, model.comments)
-
+        numberOfComments.text = "${model.comments.size} Comments"
         listView.adapter = adapter
     }
 }
