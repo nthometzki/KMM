@@ -67,7 +67,7 @@ class TweetViewImpl(root: View, private val activity: Activity) :
 
             val adapter = TweetListAdapter(activity, model.tweets, object : TweetListener {
                 override fun onItemLiked(id: String) {
-                    dispatch(Event.ToggleLiked(id))
+                    dispatch(Event.ToggleLiked(id, "User A.")) // TODO add real user name
                 }
             })
 

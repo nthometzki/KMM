@@ -28,7 +28,8 @@ import kotlin.coroutines.CoroutineContext
 class TweetFactory(
     storeFactory: StoreFactory,
     private val mainContext: CoroutineContext,
-    private val ioContext: CoroutineContext
+    private val ioContext: CoroutineContext,
+    private val userName: String
 ) : AbstractTweetFactory(storeFactory = storeFactory) {
 
     private val database = TweetDatabaseImpl()
@@ -52,7 +53,7 @@ class TweetFactory(
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddTweet -> addTweet(intent.tweet)
-                is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
+                is Intent.ToggleLiked -> toggleLiked(intent.id, intent.userName)
                 is Intent.AddAllTweets -> dispatch(Result.AddAllTweets(intent.tweets))
             }
 
@@ -70,9 +71,10 @@ class TweetFactory(
             }
         }
 
-        fun toggleLiked(id: String) {
+        fun toggleLiked(id: String, userName: String) {
             scope.launch {
-                //TweetDatabaseImpl().postLike()
+                database.postLike(id, userName)
+                dispatch(Result.ToggleLiked(id))
             }
         }
 

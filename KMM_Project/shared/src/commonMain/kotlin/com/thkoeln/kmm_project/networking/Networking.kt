@@ -50,7 +50,7 @@ class Networking {
         Networking().networking("http://thometzki.de/pp/?submitComment=true&googleid=$googleid&postid=$postid&comment=$text")
     }
 
-    suspend fun postLike(googleid: String, postid: String, liked: Boolean) {
+    suspend fun postLike(postid: String, googleid: String) {
         Networking().networking("http://thometzki.de/pp/?submitLike=true&googleid=$googleid&postid=$postid")
     }
 

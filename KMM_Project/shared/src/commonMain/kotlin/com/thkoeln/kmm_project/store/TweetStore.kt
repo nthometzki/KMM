@@ -13,7 +13,7 @@ interface TweetStore : Store<Intent, State, Nothing> {
 
     sealed class Intent : JvmSerializable {
         data class AddTweet(val tweet: Tweet) : Intent()
-        data class ToggleLiked(val id: String) : Intent()
+        data class ToggleLiked(val id: String, val userName: String) : Intent()
         data class AddAllTweets(val tweets: Array<Tweet>) : Intent()
     }
 

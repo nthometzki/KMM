@@ -15,7 +15,7 @@ interface TweetDatabase {
     suspend fun getComments(postId: String): Array<Comment>
 
     suspend fun postTweet(googleId: String, post: String, id: String)
-    suspend fun postLike(googleId: String, postId: String, liked: Boolean)
+    suspend fun postLike(googleId: String, postId: String)
     suspend fun postComment(googleId: String, postId: String, comment: String)
 
 }
@@ -111,9 +111,9 @@ class TweetDatabaseImpl : TweetDatabase {
         job.join()
     }
 
-    override suspend fun postLike(googleId: String, postId: String, liked: Boolean) {
+    override suspend fun postLike(googleId: String, postId: String) {
         val job = GlobalScope.launch {
-            Networking().postLike(googleId, postId, liked)
+            Networking().postLike(googleId, postId)
         }
         job.join()
     }

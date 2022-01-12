@@ -11,6 +11,6 @@ interface TweetView : MviView<TweetView.Model, TweetView.Event> {
 
     sealed class Event {
         data class TweetAdd(val tweet: Tweet) : Event()
-        data class ToggleLiked(val id: String) : Event()
+        data class ToggleLiked(val id: String, val userName: String) : Event()
     }
 }

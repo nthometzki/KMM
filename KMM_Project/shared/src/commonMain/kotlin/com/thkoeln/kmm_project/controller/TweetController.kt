@@ -20,7 +20,7 @@ class TweetController(
     private val ioContext: CoroutineContext,
     private val userName: String
 ) {
-    private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext).create(userName)
+    private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext, userName).create(userName)
     private var binder: Binder? = null
 
     fun onViewCreated(view: TweetView) {
