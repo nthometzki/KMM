@@ -14,7 +14,9 @@ class Networking() {
 
     @Serializable
     data class Data(val id: String, val text: String, val account_id: String, val timestamp: String)
+    @Serializable
     data class Likes(val id: String, val account_id: String, val post_id: String)
+    @Serializable
     data class Comment(val id: String, val post_id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
 
     suspend fun networking(url: String): String {

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.controller.CommentController
 import com.thkoeln.kmm_project.datastructures.Tweet
+import kotlinx.coroutines.Dispatchers
 
 class CommentFragment() : Fragment() {
 
@@ -47,7 +48,7 @@ class CommentFragment() : Fragment() {
             val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
             numberOfComments.text = "${tweetData.comments.size} Comments"
 
-            controller = CommentController(tweetData.comments)
+            controller = CommentController(tweetData.comments, Dispatchers.Main.immediate, Dispatchers.IO, tweetData.id)
             activity?.let { CommentViewImpl(root, it, tweetData.id) }
                 ?.let { controller.onViewCreated(it) }
         }

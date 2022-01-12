@@ -12,6 +12,6 @@ interface CommentView : MviView<CommentView.Model, CommentView.Event> {
 
     sealed class Event {
         data class AddComment(val comment: Comment, val postid: String) : Event()
-        data class ToggleLiked(val id: String) : Event()
+        //data class ToggleLiked(val id: String) : Event()
     }
 }

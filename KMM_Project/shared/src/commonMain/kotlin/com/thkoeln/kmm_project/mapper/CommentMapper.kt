@@ -15,6 +15,6 @@ internal val EVENT_TO_COMMENT_INTENT: CommentView.Event.() -> CommentStore.Inten
     {
         when (this) {
             is CommentView.Event.AddComment -> CommentStore.Intent.AddComment(comment, postid)
-            is CommentView.Event.ToggleLiked -> CommentStore.Intent.ToggleLiked(id)
+            //is CommentView.Event.ToggleLiked -> CommentStore.Intent.ToggleLiked(id)
         }
     }

@@ -41,7 +41,6 @@ class TweetFactory(
         override fun invoke() {
             scope.launch {
                 val tweets = withContext(ioContext) {TweetDatabaseImpl().getAll()}
-                println(tweets[0].tweetContent)
                 dispatch(Action.AddAll(tweets))
             }
         }

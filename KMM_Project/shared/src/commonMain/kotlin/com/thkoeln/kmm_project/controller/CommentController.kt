@@ -12,11 +12,18 @@ import com.thkoeln.kmm_project.mapper.EVENT_TO_COMMENT_INTENT
 import com.thkoeln.kmm_project.mapper.STATE_TO_COMMENT_MODEL
 import com.thkoeln.kmm_project.store.CommentStoreFactory
 import com.thkoeln.kmm_project.view.CommentView
+import kotlin.coroutines.CoroutineContext
 
 
-class CommentController(comments: Array<Comment>) {
+class CommentController(
+    comments: Array<Comment>,
+    private val mainContext: CoroutineContext,
+    private val ioContext: CoroutineContext,
+    private val tweetId: String
+) {
     private val store =
-        CommentStoreFactory(LoggingStoreFactory(DefaultStoreFactory())).create(comments)
+        CommentStoreFactory(
+            LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext, tweetId).create(comments)
     private var binder: Binder? = null
 
 

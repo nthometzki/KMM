@@ -87,7 +87,7 @@ class TweetDatabaseImpl : TweetDatabase {
         val job = GlobalScope.launch {
             comments = Networking().getComments(postId)
 
-            println(">>>> COMMENTS: ${comments[0]}")
+            //println(">>>> COMMENTS: ${comments[0]}")
 
             for (p in comments) {
                 mappedComments + Comment(
