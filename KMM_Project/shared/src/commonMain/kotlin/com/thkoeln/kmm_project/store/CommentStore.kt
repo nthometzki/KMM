@@ -44,6 +44,8 @@ internal class CommentStoreFactory(
     private val tweetId: String
 ) {
 
+    private val database = TweetDatabaseImpl()
+
     protected sealed class Action : JvmSerializable {
         class AddAll(val comments: Array<Comment>) : Action()
     }
@@ -62,7 +64,7 @@ internal class CommentStoreFactory(
     }
 
     sealed class Result {
-        class AddComment(val comment: Comment, val postid: String) : Result()
+        class AddComment(val comment: Comment) : Result()
         //class ToggleLiked(val id: String) : Result()
         class AddAllComments(val comments: Array<Comment>) : Result()
     }
@@ -72,8 +74,7 @@ internal class CommentStoreFactory(
         override fun executeIntent(intent: Intent, getState: () -> State) =
             when (intent) {
                 is Intent.AddComment -> {
-                    //TweetDatabaseImpl().postComment("testid", intent.postid, intent.comment.tweetContent)  // Todo("change googleid")
-                    dispatch(Result.AddComment(intent.comment, intent.postid))
+                    addComment(intent.comment, intent.postid)
                 }
                 //is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
@@ -84,6 +85,16 @@ internal class CommentStoreFactory(
             }
         }
 
+        fun addComment(comment: Comment, postid: String) {
+            scope.launch {
+                database.postComment(
+                    "testid", // Todo: Change Username
+                    postid,
+                    comment.tweetContent
+                )
+                dispatch(Result.AddComment(comment))
+            }
+        }
     }
 
     fun create(comments: Array<Comment>): CommentStore =
