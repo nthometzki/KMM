@@ -83,27 +83,25 @@ class TweetDatabaseImpl : TweetDatabase {
 
     override suspend fun getComments(postId: String): Array<Comment> {
         lateinit var comments: Array<Networking.Comment>
-        val mappedComments = arrayOf<Comment>()
+        val mappedComments = arrayListOf<Comment>()
         val job = GlobalScope.launch {
             comments = Networking().getComments(postId)
 
-            //println(">>>> COMMENTS: ${comments[0]}")
-
             for (p in comments) {
-                mappedComments + Comment(
+                mappedComments.add(Comment(
                     p.post_id,
+                    p.id,
                     p.account_id,
-                    p.username,
                     p.timestamp,
                     p.text,
                     false
-                )
+                ))
             }
         }
 
         job.join()
 
-        return mappedComments
+        return mappedComments.toTypedArray()
     }
 
     override suspend fun postTweet(googleId: String, post: String, id: String) {

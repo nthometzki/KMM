@@ -1,23 +1,20 @@
 package com.thkoeln.kmm_project.networking
 
-import com.thkoeln.kmm_project.datastructures.Tweet
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-class Networking() {
+class Networking {
 
     @Serializable
     data class Data(val id: String, val text: String, val account_id: String, val timestamp: String)
     @Serializable
     data class Likes(val id: String, val account_id: String, val post_id: String)
     @Serializable
-    data class Comment(val id: String, val post_id: String, val text: String, val account_id: String, val timestamp: String, val username: String)
+    data class Comment(val id: String, val post_id: String, val text: String, val account_id: String, val timestamp: String)
 
     suspend fun networking(url: String): String {
         println("KTOR STARTS")
@@ -42,8 +39,7 @@ class Networking() {
         val response = Networking().networking("http://thometzki.de/pp/?getPosts=true")
 
         // Serialization - Plugin also needed in build gradle
-        val obj = Json.decodeFromString<Array<Data>>(response)
-        return obj
+        return Json.decodeFromString(response)
     }
 
     suspend fun submitPost(googleid: String, text: String, id: String) {
@@ -74,12 +70,11 @@ class Networking() {
         return obj.size
     }
 
-    suspend fun getComments(postid: String) : Array<Comment> {
+    suspend fun getComments(postid: String): Array<Comment> {
         val response = Networking().networking("http://thometzki.de/pp/?getComments=true&postid=$postid")
 
         // Serialization - Plugin also needed in build gradle
-        val obj = Json.decodeFromString<Array<Comment>>(response)
-        return obj
+        return Json.decodeFromString(response)
     }
 
 }

@@ -78,7 +78,7 @@ internal class CommentStoreFactory(
                 //is Intent.ToggleLiked -> dispatch(Result.ToggleLiked(intent.id))
             }
 
-        override fun executeAction(action: Action, getState: () -> CommentStore.State) {
+        override fun executeAction(action: Action, getState: () -> State) {
             when (action) {
                 is Action.AddAll -> dispatch(Result.AddAllComments(action.comments))
             }
