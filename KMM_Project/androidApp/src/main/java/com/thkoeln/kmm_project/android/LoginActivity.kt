@@ -1,18 +1,14 @@
 package com.thkoeln.kmm_project.android
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
+
 
 class LoginActivity : AppCompatActivity() {
     fun EditText.onSubmit(func: () -> Unit) {
@@ -21,9 +17,7 @@ class LoginActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 func()
             }
-
             true
-
         }
     }
 

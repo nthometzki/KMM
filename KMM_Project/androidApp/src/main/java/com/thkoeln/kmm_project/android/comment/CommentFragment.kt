@@ -39,12 +39,13 @@ class CommentFragment() : Fragment() {
 
             val content = root.findViewById<TextView>(R.id.comment_tweet_content)
             content.text = tweetData.tweetContent
-
-
-
-
-
-            controller = CommentController(tweetData.comments, Dispatchers.Main.immediate, Dispatchers.IO, tweetData.id)
+            
+            controller = CommentController(
+                tweetData.comments,
+                Dispatchers.Main.immediate,
+                Dispatchers.IO,
+                tweetData.id
+            )
             activity?.let { CommentViewImpl(root, it, tweetData.id) }
                 ?.let { controller.onViewCreated(it) }
         }

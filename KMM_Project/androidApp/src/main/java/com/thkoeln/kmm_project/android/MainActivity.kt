@@ -2,10 +2,6 @@ package com.thkoeln.kmm_project.android
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.RelativeLayout
 import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -16,15 +12,12 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentContainerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     private lateinit var drawerLayout: DrawerLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +56,9 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, LoginActivity::class.java))
             }
             drawerLayout.closeDrawer(GravityCompat.START)
-           true
+            true
         }
     }
-
-
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -88,8 +77,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 
 }

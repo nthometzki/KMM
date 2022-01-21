@@ -15,7 +15,7 @@ import com.thkoeln.kmm_project.controller.TweetController
 import kotlinx.coroutines.Dispatchers
 
 
-class TwitterFragment() : Fragment(), View.OnClickListener {
+class TwitterFragment : Fragment(), View.OnClickListener {
 
     lateinit var controller: TweetController
 

@@ -9,14 +9,12 @@ import com.arkivanov.mvikotlin.core.view.BaseMviView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.thkoeln.kmm_project.datastructures.Tweet
 import com.thkoeln.kmm_project.android.R
-import com.thkoeln.kmm_project.datastructures.Comment
 import com.thkoeln.kmm_project.view.TweetView
 import com.thkoeln.kmm_project.view.TweetView.Event
 import com.thkoeln.kmm_project.view.TweetView.Model
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-
 import java.util.*
 
 
@@ -70,7 +68,6 @@ class TweetViewImpl(root: View, private val activity: Activity) :
                     dispatch(Event.ToggleLiked(id, "User A.")) // TODO add real user name
                 }
             })
-
             listView.adapter = adapter
         }
 
