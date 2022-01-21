@@ -13,6 +13,7 @@ import com.thkoeln.kmm_project.view.CommentView.Model
 import com.arkivanov.mvikotlin.core.view.BaseMviView;
 import com.thkoeln.kmm_project.android.R
 import com.thkoeln.kmm_project.datastructures.Comment
+import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.view.CommentView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -26,6 +27,9 @@ class CommentViewImpl(
 ) : BaseMviView<Model, Event>(), CommentView {
     private var listView: ListView = root.findViewById(R.id.comment_list_view)
     private val numberOfComments = root.findViewById<TextView>(R.id.number_comments)
+
+    val numberOfLikes = root.findViewById<TextView>(R.id.number_likes)
+  
 
 
     fun EditText.onSubmit(func: () -> Unit) {
@@ -66,6 +70,7 @@ class CommentViewImpl(
         super.render(model)
         val adapter = CommentListAdapter(activity, model.comments)
         numberOfComments.text = "${model.comments.size} Comments"
+        // numberOfLikes.text = TweetDatabaseImpl().getLikes(tweetId).toString()
         listView.adapter = adapter
     }
 }

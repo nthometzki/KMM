@@ -6,11 +6,7 @@ import com.thkoeln.kmm_project.store.TweetStore.Intent
 import com.thkoeln.kmm_project.store.TweetStore.State
 import com.arkivanov.mvikotlin.core.store.*
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
-import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.networking.database.TweetDatabase
-import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
-
 
 abstract class AbstractTweetFactory(
     private val storeFactory: StoreFactory
@@ -18,7 +14,7 @@ abstract class AbstractTweetFactory(
     fun create(userName: String): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "TodoAddStore",
-            initialState = State(arrayOf(),userName),
+            initialState = State(arrayOf(), userName),
             bootstrapper = createBootstrapper(),
             executorFactory = ::createExecutor,
             reducer = ReducerImpl
@@ -27,7 +23,7 @@ abstract class AbstractTweetFactory(
 
     protected abstract fun createExecutor(): Executor<Intent, Action, State, Result, Nothing>
 
-    protected abstract fun createBootstrapper(): CoroutineBootstrapper<Action>
+    protected abstract fun createBootstrapper(): Bootstrapper<Action>
 
     protected sealed class Result : JvmSerializable {
         class TweetAdd(val tweet: Tweet) : Result()
@@ -35,8 +31,8 @@ abstract class AbstractTweetFactory(
         class AddAllTweets(val tweets: Array<Tweet>) : Result()
     }
 
-    protected sealed class Action: JvmSerializable {
-        class AddAll(val tweets: Array<Tweet>): Action()
+    protected sealed class Action : JvmSerializable {
+        class AddAll(val tweets: Array<Tweet>) : Action()
     }
 
     private object ReducerImpl : Reducer<State, Result> {

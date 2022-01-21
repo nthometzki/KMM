@@ -5,22 +5,9 @@ import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.arkivanov.mvikotlin.extensions.coroutines.SuspendBootstrapper
-import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveBootstrapper
-import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
-import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
-import com.badoo.reaktive.scheduler.ioScheduler
-import com.badoo.reaktive.scheduler.mainScheduler
-import com.badoo.reaktive.scheduler.newThreadScheduler
-import com.badoo.reaktive.single.map
-import com.badoo.reaktive.single.observeOn
-import com.badoo.reaktive.single.singleFromFunction
-import com.badoo.reaktive.single.subscribeOn
 import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.networking.Networking
 import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.store.TweetStore.*
-import com.thkoeln.kmm_project.view.TweetView
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -36,7 +23,7 @@ class TweetFactory(
 
     override fun createExecutor(): Executor<Intent, Action, State, Result, Nothing> = ExecutorImpl()
 
-    override fun createBootstrapper(): CoroutineBootstrapper<Action> = BootstrapperImpl()
+    override fun createBootstrapper(): Bootstrapper<Action> = BootstrapperImpl()
 
     private inner class BootstrapperImpl : CoroutineBootstrapper<Action>() {
         override fun invoke() {

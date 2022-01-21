@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -14,12 +15,33 @@
 
 
     <TextView
-        android:id="@+id/nav_header_user_name"
-        android:layout_width="match_parent"
+        android:id="@+id/nav_header_userHello"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="Hello"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/nav_header_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="User Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nav_header_userHello"
+        android:layout_marginStart="5dp"/>
 
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/nav_header_user_exclamation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nav_header_user_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

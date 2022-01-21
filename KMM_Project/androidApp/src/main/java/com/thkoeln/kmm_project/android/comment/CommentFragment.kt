@@ -40,9 +40,7 @@ class CommentFragment() : Fragment() {
             val content = root.findViewById<TextView>(R.id.comment_tweet_content)
             content.text = tweetData.tweetContent
 
-            val numberOfLikes = root.findViewById<TextView>(R.id.number_likes)
-            // TODO fetch number of likes after backend change
-            numberOfLikes.text = "0 Likes"
+
 
 
 
