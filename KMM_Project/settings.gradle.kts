@@ -8,6 +8,6 @@ pluginManagement {
 }
 
 rootProject.name = "KMM_Project"
-include(":androidApp")
-include(":desktopApp")
-include(":shared")
+include(":androidApp", ":desktopApp", ":shared")
+
+

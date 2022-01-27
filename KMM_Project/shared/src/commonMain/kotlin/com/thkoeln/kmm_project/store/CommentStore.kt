@@ -9,16 +9,10 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.core.utils.JvmSerializable
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
 import com.thkoeln.kmm_project.datastructures.Comment
-import com.thkoeln.kmm_project.datastructures.Tweet
-import com.thkoeln.kmm_project.factory.AbstractTweetFactory
-import com.thkoeln.kmm_project.main
-import com.thkoeln.kmm_project.networking.Networking
 import com.thkoeln.kmm_project.networking.database.TweetDatabaseImpl
 import com.thkoeln.kmm_project.store.CommentStore.Intent
 import com.thkoeln.kmm_project.store.CommentStore.State
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -105,7 +99,7 @@ internal class CommentStoreFactory(
             executorFactory = ::createExecutor,
             reducer = ReducerImpl,
         ) {
-            val main = main()
+
         }
 
 

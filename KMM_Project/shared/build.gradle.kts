@@ -10,6 +10,8 @@ plugins {
 kotlin {
     android()
 
+    jvm()
+
     val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget = when {
         System.getenv("SDK_NAME")?.startsWith("iphoneos") == true -> ::iosArm64
         System.getenv("NATIVE_ARCH")?.startsWith("arm") == true -> ::iosSimulatorArm64
@@ -44,6 +46,10 @@ kotlin {
         }
         val androidMain by getting {
         }
+
+
+
+
     }
 }
 
