@@ -60,6 +60,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:1.6.7")
             }
         }
+
         val iosMain by getting
         val iosTest by getting
     }

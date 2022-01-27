@@ -11,14 +11,13 @@ import com.arkivanov.mvikotlin.extensions.reaktive.events
 import com.arkivanov.mvikotlin.extensions.reaktive.states
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.badoo.reaktive.observable.map
-import com.thkoeln.kmm_project.store.TweetStore
 import kotlin.coroutines.CoroutineContext
 
 
 class TweetController(
-    private val mainContext: CoroutineContext,
-    private val ioContext: CoroutineContext,
-    private val userName: String
+    mainContext: CoroutineContext,
+    ioContext: CoroutineContext,
+    userName: String
 ) {
     private val store = TweetFactory(LoggingStoreFactory(DefaultStoreFactory()), mainContext, ioContext, userName).create(userName)
     private var binder: Binder? = null
