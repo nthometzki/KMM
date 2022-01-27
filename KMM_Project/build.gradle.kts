@@ -13,8 +13,10 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         mavenCentral()
     }
+
 }
 
 tasks.register("clean", Delete::class) {
