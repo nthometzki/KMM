@@ -1,5 +1,4 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.kotlin.daemon.client.KotlinCompilerClient.compile
 
 plugins {
     kotlin("jvm")
@@ -22,6 +21,7 @@ dependencies {
     implementation("com.arkivanov.mvikotlin:rx:3.0.0-alpha02")
     implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:3.0.0-alpha02")
     implementation("com.arkivanov.decompose:decompose:0.5.0")
+    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:0.3.1")
     implementation(project(mapOf("path" to ":shared")))
 
 }

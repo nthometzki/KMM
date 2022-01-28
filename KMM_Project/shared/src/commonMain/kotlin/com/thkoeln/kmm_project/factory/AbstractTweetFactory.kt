@@ -13,7 +13,7 @@ abstract class AbstractTweetFactory(
 ) {
     fun create(userName: String): TweetStore =
         object : TweetStore, Store<Intent, State, Nothing> by storeFactory.create(
-            name = "TodoAddStore",
+            name = "TweetStore",
             initialState = State(arrayOf(), userName),
             bootstrapper = createBootstrapper(),
             executorFactory = ::createExecutor,

@@ -12,6 +12,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
+import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
+import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
+import com.thkoeln.kmm_project.factory.TweetFactory
+import com.thkoeln.kmm_project.store.TweetStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 private val screens = listOf(
@@ -25,7 +30,15 @@ sealed class DrawerScreens(
     val screenToLoad: @Composable () -> Unit
 ) {
     object Twitter : DrawerScreens("twitter", "Twitter", {
-        TwitterScreen()
+        val store =
+            TweetFactory(
+                LoggingStoreFactory(DefaultStoreFactory()),
+                Dispatchers.Main.immediate,
+                Dispatchers.IO,
+                "userName"
+            ).create("userName")
+
+        TwitterScreen(store)
     })
 
     object Login : DrawerScreens("logout", "Logout", {
