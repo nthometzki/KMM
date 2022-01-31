@@ -36,24 +36,12 @@ abstract class AbstractTweetFactory(
     }
 
     private object ReducerImpl : Reducer<State, Result> {
-        fun <T> Array<T>.mapInPlace(transform: (T) -> Unit): Array<T> {
-            for (i in this.indices) {
-                transform(this[i])
-            }
-            return this
-        }
-
-        override fun State.reduce(result: Result): State =
+             override fun State.reduce(result: Result): State =
             when (result) {
                 is Result.TweetAdd -> {
                     copy(value = value + result.tweet)
                 }
-                is Result.ToggleLiked -> copy(value = value.mapInPlace {
-                    if (it.id == result.id) {
-                        it.liked = !it.liked
-                    }
-                    println(">>> CHANGE LIKED-ID ${it.id} TO: ${it.liked}")
-                })
+                is Result.ToggleLiked -> copy(value = value.map { if (it.id == result.id) it.copy(liked = !it.liked) else it }.toTypedArray())
                 is Result.AddAllTweets -> copy(value = result.tweets)
             }
     }

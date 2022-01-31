@@ -3,6 +3,8 @@ package ui
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.DefaultComponentContext
 import kotlinx.coroutines.launch
 
 @Composable
@@ -20,7 +22,8 @@ fun NavigationDrawer() {
                         scaffoldState.drawerState.close()
                     }
                     currentScreen.value = drawerScreen
-                })
+                }
+                )
         },
         content = {
             currentScreen.value.screenToLoad()

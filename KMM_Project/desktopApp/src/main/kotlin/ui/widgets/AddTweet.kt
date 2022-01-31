@@ -17,9 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.thkoeln.kmm_project.datastructures.Comment
+import com.thkoeln.kmm_project.datastructures.Tweet
+import ui.addTweet
+import java.util.*
+
+interface AddTweet {
+    fun addTweet(tweet: Tweet)
+}
 
 @Composable
-fun AddTweet() {
+fun AddTweet(addTweet: AddTweet) {
     var text by remember { mutableStateOf("") }
 
     Row(
@@ -28,7 +36,7 @@ fun AddTweet() {
         horizontalArrangement = Arrangement.Center,
     ) {
 
-        TextField(
+        OutlinedTextField(
             value = text,
             onValueChange = { text = it },
             placeholder = { Text("What's happening right now?") },
@@ -38,7 +46,16 @@ fun AddTweet() {
 
         Box(modifier = Modifier.fillMaxSize()) {
             Button(
-                onClick = { println("TEST") }, modifier = Modifier
+                onClick = { addTweet.addTweet(
+                    Tweet(
+                        id = UUID.randomUUID().toString(),
+                        userName = "Testing",
+                        tweetContent = text,
+                        tweetDate = "heute",
+                        liked = true,
+                        comments = arrayOf<Comment>()
+                    )
+                ) }, modifier = Modifier
                     .padding(10.dp).align(Alignment.BottomEnd)
             ) {
                 Text("Tweet")
@@ -46,7 +63,6 @@ fun AddTweet() {
         }
 
     }
-
 
 }
 

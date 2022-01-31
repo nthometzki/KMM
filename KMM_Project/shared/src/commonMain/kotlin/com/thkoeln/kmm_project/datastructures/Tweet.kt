@@ -12,3 +12,5 @@ data class Tweet(
     var liked: Boolean = false,
     var comments: Array<Comment>
 ) : Parcelable
+
+

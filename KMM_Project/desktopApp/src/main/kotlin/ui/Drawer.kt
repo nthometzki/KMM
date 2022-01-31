@@ -12,6 +12,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.window.rememberWindowState
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
+import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.thkoeln.kmm_project.factory.TweetFactory
@@ -37,7 +42,10 @@ sealed class DrawerScreens(
                 Dispatchers.IO,
                 "userName"
             ).create("userName")
+        val lifecycle = LifecycleRegistry()
+        val windowState = rememberWindowState()
 
+        LifecycleController(lifecycle, windowState)
         TwitterScreen(store)
     })
 
@@ -69,7 +77,7 @@ fun DrawerHeader() {
 fun Drawer(
     modifier: Modifier = Modifier,
     selectedScreen: DrawerScreens,
-    onMenuSelected: ((drawerScreen: DrawerScreens) -> Unit)? = null
+    onMenuSelected: ((drawerScreen: DrawerScreens) -> Unit)? = null,
 ) {
     Column(
         modifier
