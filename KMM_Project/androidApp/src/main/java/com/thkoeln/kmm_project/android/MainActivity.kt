@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import com.thkoeln.kmm_project.android.databinding.ActivityMain2Binding
 
@@ -52,6 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.nav_tweet -> {
+                    val bundle = bundleOf("userName" to userName)
+                    this.findNavController(navView.id).navigate(R.id.fragment_home, bundle)
+
+                }
                 R.id.nav_logout ->
                     startActivity(Intent(this, LoginActivity::class.java))
             }

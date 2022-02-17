@@ -42,10 +42,7 @@ sealed class DrawerScreens(
                 Dispatchers.IO,
                 "userName"
             ).create("userName")
-        val lifecycle = LifecycleRegistry()
-        val windowState = rememberWindowState()
 
-        LifecycleController(lifecycle, windowState)
         TwitterScreen(store)
     })
 

@@ -3,9 +3,6 @@ package ui
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -13,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.ValueObserver
 import com.arkivanov.decompose.value.operator.map
@@ -25,8 +21,6 @@ import com.thkoeln.kmm_project.store.TweetStore
 import ui.widgets.AddTweet
 import ui.widgets.Tweet
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import com.thkoeln.kmm_project.view.TweetView
-import kotlinx.coroutines.flow.MutableStateFlow
 import ui.widgets.ModifyStore
 
 // Code by https://github.com/JetBrains/compose-jb/tree/master/examples/todoapp
@@ -51,7 +45,6 @@ fun <T : Any> Store<*, T, *>.asValue(): Value<T> =
 
 @Composable
 fun TwitterScreen(store: TweetStore) {
-
     val models = store.asValue().map(STATE_TO_MODEL)
     val model by models.subscribeAsState()
 
@@ -79,9 +72,6 @@ private fun TweetList(
     tweets: Array<Tweet>,
     store: TweetStore,
 ) {
-
-    // val tweetCopy = tweets.copyOf().toMutableList()
-
     Box {
         tweets.sortByDescending { it.tweetDate }
 
@@ -96,33 +86,10 @@ private fun TweetList(
                         }
                     }
                 )
-
                 Divider()
-
             }
 
-
         }
-        /*Column(
-            modifier = Modifier
-                .width(500.dp)
-                .verticalScroll(rememberScrollState())
-                .width(500.dp).border(0.5.dp, Color(0xFF828282))
-        ) {
-            tweets.forEachIndexed { index, tweet ->
-                Tweet(
-                    tweet,
-                    object : ModifyStore {
-                        override fun onItemLiked(id: String) {
-                            toggleLiked(store, id, "User A") // TODO add real user name
-
-                        }
-                    }
-                )
-            }
-            Spacer(modifier = Modifier.height(40.dp))
-        }
-*/
     }
 }
 

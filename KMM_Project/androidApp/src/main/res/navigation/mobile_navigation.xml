@@ -10,7 +10,10 @@
         android:name="com.thkoeln.kmm_project.android.ui.twitter.TwitterFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
-
+        <argument
+            android:name="userName"
+            app:argType="string"
+            android:defaultValue="UserName"/>
         <action android:id="@+id/action_tweet" app:destination="@+id/nav_tweet" />
 
     </fragment>
